@@ -1,24 +1,120 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { Nav } from "@/components/scope/Nav";
+import {
+  Accelerator,
+  Cashback,
+  Comparison,
+  Ecosystemreach,
+  Eligibility,
+  Evidence,
+  Faq,
+  FinalCta,
+  Hero,
+  Journey,
+  Partners,
+  Personalize,
+  Portfolio,
+  Problem,
+  Unlocks,
+  ValueAndPrice,
+} from "@/components/scope/Sections";
+import { ApplicationSection, PaymentSection } from "@/components/scope/PaymentApply";
+import { faqs, type StudentTypeKey } from "@/lib/scope-data";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Scope Empowerment Card | Student Identity Beyond the Classroom" },
+      {
+        name: "description",
+        content:
+          "Scope Empowerment Card by Scope Innovation Lab — a 5-year student membership with one eligible Accelerator in Year 1, a QR-linked portfolio and ecosystem participation. ₹2,499 one-time.",
+      },
+      { property: "og:title", content: "Scope Empowerment Card — Scope Innovation Lab" },
+      {
+        property: "og:description",
+        content:
+          "One Card. Five years to Learn, Build, Showcase, Connect & Grow. ₹2,499 one-time, 5 years / 60 months.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Landing,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function StickyCta() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const apply = document.getElementById("payment");
+      const past = window.scrollY > window.innerHeight * 0.9;
+      let formVisible = false;
+      if (apply) {
+        const r = apply.getBoundingClientRect();
+        formVisible = r.top < window.innerHeight && r.bottom > 0;
+      }
+      const end = document.getElementById("apply");
+      if (end) {
+        const r = end.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) formVisible = true;
+      }
+      setShow(past && !formVisible);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
+      className={`no-print fixed inset-x-0 bottom-0 z-40 p-3 transition-all duration-300 md:hidden ${
+        show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-full opacity-0"
+      }`}
     >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+      <a
+        href="#payment"
+        className="flex min-h-12 items-center justify-center rounded-full bg-scope text-[0.78rem] font-bold tracking-[0.14em] text-white uppercase shadow-lg"
+      >
+        Apply for Scope Card
+      </a>
     </div>
+  );
+}
+
+function Landing() {
+  const [studentType, setStudentType] = useState<StudentTypeKey>("creative");
+
+  return (
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Problem />
+        <Evidence />
+        <Unlocks />
+        <Personalize selected={studentType} onSelect={setStudentType} />
+        <Accelerator />
+        <Comparison />
+        <Portfolio selected={studentType} />
+        <Journey />
+        <Ecosystemreach />
+        <Cashback />
+        <Partners />
+        <Eligibility />
+        <ValueAndPrice />
+        <PaymentSection />
+        <ApplicationSection defaultStudentType={studentType} />
+        <Faq items={faqs} />
+        <FinalCta />
+      </main>
+      <footer className="no-print bg-ink px-5 py-8 text-center text-[0.7rem] text-white/40 md:px-10">
+        Scope Innovation Lab · Scope Empowerment Card · Exclusive to eligible students enlisted with
+        Scope Innovation Lab.
+      </footer>
+      <StickyCta />
+    </>
   );
 }
