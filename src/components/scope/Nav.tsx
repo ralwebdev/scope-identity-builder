@@ -28,7 +28,11 @@ export function Nav() {
     >
       <nav aria-label="Primary" className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 md:px-10">
         <a href="#top" className="flex items-center gap-2">
-          <span className="inline-block h-3 w-3 rounded-[2px] bg-scope" />
+          <img
+            src="/SCOPE Innovation Lab logo mark-07.png"
+            alt="SCOPE Logo"
+            className="h-6 w-auto object-contain md:h-7"
+          />
           <span className="font-display text-base font-extrabold tracking-[0.06em]">SCOPE</span>
         </a>
 

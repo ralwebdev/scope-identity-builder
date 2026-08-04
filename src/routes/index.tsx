@@ -109,9 +109,16 @@ function Landing() {
         <Faq items={faqs} />
         <FinalCta />
       </main>
-      <footer className="no-print bg-ink px-5 py-8 text-center text-[0.8rem] text-white/40 md:px-10">
-        Scope Innovation Lab · Scope Empowerment Card · Exclusive to eligible students enlisted with
-        Scope Innovation Lab.
+      <footer className="no-print bg-ink px-5 py-12 text-center text-[0.8rem] text-white/40 md:px-10 flex flex-col items-center gap-4">
+        <img
+          src="/SCOPE Innovation Lab logo mark-07.png"
+          alt="SCOPE Innovation Lab Logo"
+          className="h-8 w-auto object-contain opacity-40 hover:opacity-80 transition-opacity"
+        />
+        <p>
+          Scope Innovation Lab · Scope Empowerment Card · Exclusive to eligible students enlisted with
+          Scope Innovation Lab.
+        </p>
       </footer>
       <StickyCta />
     </>

@@ -65,7 +65,11 @@ export function ScopeCard({ className = "", tilt = true }: { className?: string;
           <div className="flex items-start justify-between gap-3">
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="inline-block h-3 w-3 rounded-[2px] bg-scope" />
+                <img
+                  src="/SCOPE Innovation Lab logo mark-07.png"
+                  alt="SCOPE Logo"
+                  className="h-[clamp(0.6rem,1.8cqw,0.85rem)] w-auto object-contain brightness-100"
+                />
                 <span className="text-[clamp(0.85rem,2.5cqw,1.1rem)] leading-none font-extrabold tracking-[0.06em]">
                   SCOPE
                 </span>
