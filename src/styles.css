@@ -127,8 +127,11 @@
 
 @utility card-sheen {
   background-image:
-    radial-gradient(120% 90% at 80% -10%, oklch(1 0 0 / 0.1), transparent 60%),
-    linear-gradient(150deg, oklch(0.22 0.005 250), oklch(0.14 0.004 250) 60%);
+    radial-gradient(120% 90% at 80% -10%, rgba(255, 255, 255, 0.2), transparent 65%),
+    url('/Scope 1.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /* Reveal on scroll */

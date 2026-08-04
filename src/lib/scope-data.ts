@@ -1,8 +1,8 @@
 export const MEMBER = {
-  name: "DISHA MUKHERJEE",
+  name: "AARAV SHARMA",
   id: "SIL-2026-000567",
-  term: "5-YEAR",
-  validity: "60 MONTHS",
+  term: "LIFETIME",
+  validity: "LIFETIME",
 };
 
 export const FEE = "₹2,499";
