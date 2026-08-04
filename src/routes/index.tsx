@@ -4,20 +4,21 @@ import { Nav } from "@/components/scope/Nav";
 import {
   Accelerator,
   Cashback,
-  Comparison,
   Ecosystemreach,
   Eligibility,
-  Evidence,
   Faq,
+  FastStrip,
   FinalCta,
   Hero,
-  Journey,
+  JourneyComparison,
   Partners,
   Personalize,
   Portfolio,
+  PriceReveal,
   Problem,
   Unlocks,
-  ValueAndPrice,
+  ValueComparison,
+  WhyDifferent,
 } from "@/components/scope/Sections";
 import { ApplicationSection, PaymentSection } from "@/components/scope/PaymentApply";
 import { faqs, type StudentTypeKey } from "@/lib/scope-data";
@@ -49,19 +50,16 @@ function StickyCta() {
 
   useEffect(() => {
     const onScroll = () => {
-      const apply = document.getElementById("payment");
-      const past = window.scrollY > window.innerHeight * 0.9;
+      const doc = document.documentElement;
+      const progress = window.scrollY / Math.max(1, doc.scrollHeight - window.innerHeight);
       let formVisible = false;
-      if (apply) {
-        const r = apply.getBoundingClientRect();
-        formVisible = r.top < window.innerHeight && r.bottom > 0;
-      }
-      const end = document.getElementById("apply");
-      if (end) {
-        const r = end.getBoundingClientRect();
+      for (const id of ["payment", "apply"]) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
         if (r.top < window.innerHeight && r.bottom > 0) formVisible = true;
       }
-      setShow(past && !formVisible);
+      setShow(progress > 0.25 && !formVisible);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -76,7 +74,7 @@ function StickyCta() {
     >
       <a
         href="#payment"
-        className="flex min-h-12 items-center justify-center rounded-full bg-scope text-[0.78rem] font-bold tracking-[0.14em] text-white uppercase shadow-lg"
+        className="flex min-h-12 items-center justify-center rounded-full bg-scope text-[0.95rem] font-semibold text-white shadow-lg"
       >
         Apply for Scope Card
       </a>
@@ -85,32 +83,33 @@ function StickyCta() {
 }
 
 function Landing() {
-  const [studentType, setStudentType] = useState<StudentTypeKey>("creative");
+  const [studentType, setStudentType] = useState<StudentTypeKey | null>(null);
 
   return (
     <>
       <Nav />
       <main>
         <Hero />
+        <FastStrip />
         <Problem />
-        <Evidence />
-        <Unlocks />
         <Personalize selected={studentType} onSelect={setStudentType} />
         <Accelerator />
-        <Comparison />
+        <Unlocks />
         <Portfolio selected={studentType} />
-        <Journey />
         <Ecosystemreach />
+        <ValueComparison />
+        <JourneyComparison />
+        <WhyDifferent />
         <Cashback />
         <Partners />
         <Eligibility />
-        <ValueAndPrice />
+        <PriceReveal />
         <PaymentSection />
-        <ApplicationSection defaultStudentType={studentType} />
+        <ApplicationSection defaultStudentType={studentType ?? "creative"} />
         <Faq items={faqs} />
         <FinalCta />
       </main>
-      <footer className="no-print bg-ink px-5 py-8 text-center text-[0.7rem] text-white/40 md:px-10">
+      <footer className="no-print bg-ink px-5 py-8 text-center text-[0.8rem] text-white/40 md:px-10">
         Scope Innovation Lab · Scope Empowerment Card · Exclusive to eligible students enlisted with
         Scope Innovation Lab.
       </footer>
