@@ -23,9 +23,8 @@ export function Nav() {
 
   return (
     <header
-      className={`no-print fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        solid ? "bg-ink/95 backdrop-blur-sm" : "bg-transparent"
-      } text-white`}
+      className={`no-print fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${solid ? "bg-ink/95 backdrop-blur-sm" : "bg-transparent"
+        } text-white`}
     >
       <nav aria-label="Primary" className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 md:px-10">
         <a href="#top" className="flex items-center gap-2">
@@ -48,7 +47,7 @@ export function Nav() {
 
         <div className="flex items-center gap-2">
           <a
-            href="#payment"
+            href="#apply-form"
             className="hidden min-h-11 items-center rounded-full bg-scope px-5 text-[0.85rem] font-semibold text-white transition-colors hover:bg-scope-deep sm:inline-flex"
           >
             Apply for Scope Card
@@ -82,7 +81,7 @@ export function Nav() {
             ))}
             <li>
               <a
-                href="#payment"
+                href="#apply-form"
                 onClick={() => setOpen(false)}
                 className="mt-3 flex min-h-11 items-center justify-center rounded-full bg-scope text-[0.95rem] font-semibold"
               >

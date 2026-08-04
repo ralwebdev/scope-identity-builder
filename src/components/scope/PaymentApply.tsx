@@ -149,6 +149,8 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
   });
   const [errors, setErrors] = useState<Errors>({});
   const [result, setResult] = useState<ScopeApplication | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const set = (k: string, v: string | boolean) => {
     setForm((f) => ({ ...f, [k]: v }));
@@ -172,9 +174,13 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
     return Object.keys(e).length === 0;
   };
 
-  const onSubmit = (ev: FormEvent) => {
+  const onSubmit = async (ev: FormEvent) => {
     ev.preventDefault();
     if (!validate()) return;
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
     const utr = form.utr.trim();
     const app: ScopeApplication = {
       applicationId: newApplicationId(),
@@ -193,8 +199,57 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
       status: "Pending Verification",
       submittedAt: new Date().toISOString(),
     };
-    saveApplication(app);
-    setResult(app);
+
+    try {
+      const appsScriptUrl = import.meta.env.VITE_APPSCRIPT_URL;
+
+      if (appsScriptUrl) {
+        const studentLabel = studentTypes.find((s) => s.key === app.studentType)?.label || app.studentType || "Not specified";
+        const payload = {
+          id: app.applicationId,
+          submittedAt: app.submittedAt,
+          name: app.fullName,
+          phone: app.phone,
+          email: app.email,
+          batchId: app.batchId,
+          utr: app.utr,
+          interest: studentLabel,
+          accelerator: app.acceleratorPreference || "Not specified",
+          status: app.status,
+          membershipType: "5-Year",
+          validityMonths: 60,
+        };
+
+        const response = await fetch(appsScriptUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.status === "error") {
+          throw new Error(data.message || "Failed to submit card application");
+        }
+      } else {
+        console.warn("VITE_APPSCRIPT_URL is not set. Saving application only to local storage.");
+      }
+
+      saveApplication(app);
+      setResult(app);
+    } catch (err: any) {
+      console.error("Error submitting application:", err);
+      setSubmitError(
+        err.message || "An unexpected error occurred. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const field =
@@ -213,7 +268,8 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
       </ol>
 
       <Headline className="mt-14">
-        Apply for your
+        <span id="apply-form">
+          Apply for your</span>
         <br />
         Scope Empowerment Card
       </Headline>
@@ -315,8 +371,16 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
           {errors.confirmTerms && <p className="text-xs text-destructive">{errors.confirmTerms}</p>}
         </div>
 
+        {submitError && (
+          <div className="md:col-span-2 rounded-lg bg-destructive/10 border border-destructive/20 p-4 text-sm text-destructive font-medium">
+            {submitError}
+          </div>
+        )}
+
         <div className="md:col-span-2">
-          <Cta type="submit">Submit card application</Cta>
+          <Cta type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting application..." : "Submit card application"}
+          </Cta>
         </div>
       </form>
 

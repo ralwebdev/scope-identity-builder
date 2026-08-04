@@ -7,6 +7,7 @@ export function Cta({
   className = "",
   onClick,
   type,
+  disabled,
 }: {
   href?: string;
   children: ReactNode;
@@ -14,9 +15,10 @@ export function Cta({
   className?: string;
   onClick?: () => void;
   type?: "button" | "submit";
+  disabled?: boolean;
 }) {
   const base =
-    "group inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-semibold tracking-normal transition-all duration-200 active:scale-[0.97]";
+    "group inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-semibold tracking-normal transition-all duration-200 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50";
   const styles = {
     primary:
       "bg-scope text-white shadow-[0_10px_24px_-12px_var(--scope)] hover:-translate-y-0.5 hover:bg-scope-deep",
@@ -45,7 +47,12 @@ export function Cta({
     );
   }
   return (
-    <button type={type ?? "button"} onClick={onClick} className={`${base} ${styles} ${className}`}>
+    <button
+      type={type ?? "button"}
+      onClick={onClick}
+      disabled={disabled}
+      className={`${base} ${styles} ${className}`}
+    >
       {inner}
     </button>
   );
