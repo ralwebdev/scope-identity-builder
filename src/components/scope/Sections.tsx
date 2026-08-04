@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { ScopeCard, QrPlaceholder } from "./ScopeCard";
-import { Cta, Eyebrow, Headline, SectionShell } from "./Ui";
-import { Reveal, useReveal } from "./Reveal";
+import { Cta, Fine, Headline, SectionShell, Sub } from "./Ui";
+import { Reveal } from "./Reveal";
 import {
-  comparisonRows,
   creativeTopics,
+  journeyRows,
   MEMBER,
   partners,
   studentTypes,
@@ -17,7 +17,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] items-center bg-ink px-5 pt-24 pb-16 text-white md:px-10"
+      className="relative flex min-h-[92svh] items-center bg-ink px-5 pt-24 pb-14 text-white md:px-10"
     >
       <div
         aria-hidden="true"
@@ -27,90 +27,121 @@ export function Hero() {
             "radial-gradient(70% 55% at 78% 30%, oklch(0.55 0.22 27 / 0.22), transparent 70%)",
         }}
       />
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 md:grid-cols-[1fr_1fr]">
-        <div>
-          <p className="eyebrow text-scope">Exclusive to eligible Scope Innovation Lab students</p>
-          <h1 className="mt-5 font-display text-[clamp(2.1rem,6.6vw,4.3rem)] leading-[0.98] font-extrabold uppercase">
-            Your student identity
-            <br />
-            <span className="text-white/55">beyond the classroom.</span>
-          </h1>
-          <p className="mt-6 max-w-md text-[0.98rem] leading-relaxed text-white/70">
-            Your student ID says where you study. Your Scope Card shows what you&apos;re building
-            beyond it.
-          </p>
-          <p className="mt-6 text-[0.68rem] font-semibold tracking-[0.22em] text-cyan-accent uppercase">
-            Skills • Projects • Portfolio • Experiences • Opportunities
-          </p>
-          <p className="mt-3 text-sm text-white/55">
-            One Card. Five Years to Learn, Build, Showcase, Connect &amp; Grow.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Cta href="#benefits">Explore what my card unlocks</Cta>
-            <Cta href="#payment" variant="ghost">
-              Apply for Scope Empowerment Card
-            </Cta>
+      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 md:grid-cols-2 md:gap-14">
+        <div className="contents md:block">
+          <div className="order-1">
+            <p className="eyebrow text-scope">Exclusive to eligible Scope Innovation Lab students</p>
+            <h1 className="mt-4 text-[clamp(2.5rem,7.4vw,5.1rem)] leading-[1.02] font-extrabold tracking-[-0.03em]">
+              Your Student Identity
+              <br />
+              <span className="text-white/55">Beyond the Classroom.</span>
+            </h1>
+          </div>
+
+          {/* Card comes before long copy on mobile */}
+          <div className="order-2 mt-8 md:hidden">
+            <HeroCardVisual />
+          </div>
+
+          <div className="order-3">
+            <p className="mt-6 max-w-[620px] text-[1.05rem] leading-[1.5] font-medium text-white/75 md:text-[1.35rem]">
+              Your student ID says where you study. Your Scope Card helps show what you&apos;re
+              building beyond it.
+            </p>
+            <p className="mt-5 text-[0.8rem] font-bold tracking-[0.08em] text-cyan-accent uppercase">
+              Skills • Projects • Portfolio • Experiences • Opportunities
+            </p>
+            <p className="mt-2 text-[0.8rem] font-bold tracking-[0.08em] text-white/55 uppercase">
+              One card • Five years • One Year-1 Accelerator
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Cta href="#benefits">Explore what my card unlocks</Cta>
+              <Cta href="#payment" variant="ghost">
+                Apply for Scope Card
+              </Cta>
+            </div>
           </div>
         </div>
 
-        <div className="relative">
-          <div className="relative mx-auto max-w-[440px]" style={{ containerType: "inline-size" }}>
-            <ScopeCard />
-          </div>
-          <ul className="mt-7 flex flex-wrap justify-center gap-2">
-            {["5-YEAR MEMBERSHIP", "PORTFOLIO QR", "YEAR-1 ACCELERATOR", "SCOPE VERIFIED"].map((l) => (
-              <li
-                key={l}
-                className="rounded-full border border-white/15 px-3 py-1.5 text-[0.6rem] font-semibold tracking-[0.14em] text-white/70 uppercase"
-              >
-                {l}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-4 text-center text-[0.7rem] text-white/40">
-            Available only through participating Scope Innovation Lab Chapters.
-          </p>
+        <div className="hidden md:block">
+          <HeroCardVisual />
         </div>
       </div>
     </section>
   );
 }
 
-/* ---------------- 02 PROBLEM + 03 QUALIFICATION VS EVIDENCE ---------------- */
+function HeroCardVisual() {
+  return (
+    <div>
+      <div className="relative mx-auto max-w-[460px]" style={{ containerType: "inline-size" }}>
+        <ScopeCard />
+      </div>
+      <p className="mt-5 text-center text-[0.8rem] text-white/40">
+        Available only through participating Scope Innovation Lab Chapters.
+      </p>
+    </div>
+  );
+}
+
+/* ---------------- 02 FAST COMPREHENSION STRIP ---------------- */
+const fastItems = [
+  "One card.",
+  "5 years.",
+  "One first-year Accelerator.",
+  "One growing student profile.",
+  "Multiple ways to participate.",
+];
+
+export function FastStrip() {
+  return (
+    <div className="border-y bg-secondary">
+      <ul className="mx-auto flex max-w-6xl gap-6 overflow-x-auto px-5 py-4 md:px-10 [scrollbar-width:none]">
+        {fastItems.map((f) => (
+          <li
+            key={f}
+            className="flex shrink-0 items-center gap-2 text-[0.9rem] font-semibold whitespace-nowrap"
+          >
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-scope" />
+            {f}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ---------------- 03 PROBLEM ---------------- */
 const problems: [string, string][] = [
-  ["DIRECTION", "What should I explore beyond my syllabus?"],
-  ["EXPERIENCE", "Where can I actually participate and build something?"],
-  ["VISIBILITY", "How do I show what I have learned, created and achieved?"],
-  ["OPPORTUNITY", "How do I discover what comes next?"],
+  ["Direction", "What should I explore?"],
+  ["Experience", "Where can I participate?"],
+  ["Visibility", "How do I show what I've done?"],
+  ["Opportunity", "What can I discover next?"],
 ];
 
 export function Problem() {
   return (
-    <SectionShell id="problem">
+    <SectionShell id="problem" className="!py-14 md:!py-20">
       <Reveal>
         <Headline className="max-w-3xl">
           Your syllabus is important.
           <br />
-          <span className="text-muted-foreground">But it can&apos;t be your entire student story.</span>
+          <span className="text-muted-foreground">
+            It doesn&apos;t have to be your entire student story.
+          </span>
         </Headline>
       </Reveal>
-      <div className="mt-10 grid gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
         {problems.map(([t, d], i) => (
-          <Reveal key={t} className="bg-card p-6">
-            <span className="font-display text-2xl font-extrabold text-scope/25">0{i + 1}</span>
-            <h3 className="mt-3 text-sm font-bold tracking-[0.14em] uppercase">{t}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d}</p>
-          </Reveal>
+          <div key={t} className="bg-card p-5">
+            <span className="text-sm font-bold text-scope/40">0{i + 1}</span>
+            <h3 className="mt-1 text-lg font-bold tracking-[-0.02em]">{t}</h3>
+            <p className="mt-1 text-[0.95rem] text-muted-foreground">{d}</p>
+          </div>
         ))}
       </div>
-      <p className="mt-8 text-[0.7rem] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
-        Direction → Experience → Visibility → Opportunity
-      </p>
-      <div className="mt-8 flex flex-wrap items-center gap-4">
-        <p className="font-display text-lg font-bold uppercase">
-          This is where your Scope journey begins.
-        </p>
-        <Cta href="#evidence" variant="ghost">
+      <div className="mt-8">
+        <Cta href="#my-path" variant="ghost">
           See how Scope works
         </Cta>
       </div>
@@ -118,130 +149,25 @@ export function Problem() {
   );
 }
 
-export function Evidence() {
-  const left = [
-    "Degree / School qualification",
-    "Assignments",
-    "Certificates",
-    "Activities scattered across devices",
-    "No single profile",
-  ];
-  const right = [
-    "Qualification",
-    "Skills",
-    "Projects",
-    "Competitions",
-    "Hackathons",
-    "Certificates",
-    "Achievements",
-    "Experiences",
-    "One QR-linked profile",
-  ];
-  return (
-    <SectionShell id="evidence" dark>
-      <Reveal>
-        <Headline className="max-w-3xl">
-          Your qualification tells people what you studied.
-          <br />
-          <span className="text-scope">Your journey shows what you did with it.</span>
-        </Headline>
-      </Reveal>
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
-        <Reveal className="rounded-xl border border-white/10 p-6">
-          <p className="eyebrow text-white/40">Typical student record</p>
-          <ul className="mt-4 space-y-2">
-            {left.map((i) => (
-              <li key={i} className="text-sm text-white/55">
-                — {i}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-        <Reveal className="rounded-xl border border-scope/40 bg-white/[0.03] p-6">
-          <p className="eyebrow text-scope">Growing Scope profile</p>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {right.map((i) => (
-              <li
-                key={i}
-                className="rounded-full border border-white/15 px-3 py-1.5 text-[0.72rem] text-white/85"
-              >
-                {i}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-      </div>
-      <p className="mt-10 font-display text-[clamp(1.1rem,2.6vw,1.7rem)] leading-tight font-extrabold uppercase">
-        Don&apos;t wait until the end of your education
-        <br />
-        <span className="text-white/45">to start building the evidence.</span>
-      </p>
-    </SectionShell>
-  );
-}
-
-/* ---------------- 04 UNLOCKS ---------------- */
-const unlocks: [string, string][] = [
-  ["LEARN", "Selected accelerators, workshops and masterclasses."],
-  ["BUILD", "Projects, challenges, ideathons and hackathons."],
-  ["SHOWCASE", "Portfolio, skills, certificates and achievements."],
-  ["CONNECT", "Cross-campus and ecosystem exposure."],
-  ["GROW", "Discover relevant competitions, projects and opportunities."],
-];
-
-export function Unlocks() {
-  return (
-    <SectionShell id="benefits">
-      <div className="grid items-center gap-10 md:grid-cols-[0.85fr_1.15fr]">
-        <Reveal>
-          <div style={{ containerType: "inline-size" }}>
-            <ScopeCard />
-          </div>
-        </Reveal>
-        <div>
-          <Reveal>
-            <Headline>
-              One card.
-              <br />
-              <span className="text-muted-foreground">Five ways to build your student journey.</span>
-            </Headline>
-          </Reveal>
-          <ol className="mt-8 grid gap-px overflow-hidden rounded-xl border bg-border md:grid-cols-5">
-            {unlocks.map(([t, d], i) => (
-              <li key={t} className="bg-card p-4">
-                <span className="text-[0.65rem] font-bold tracking-[0.18em] text-scope">
-                  0{i + 1}
-                </span>
-                <h3 className="mt-1 font-display text-base font-extrabold uppercase">{t}</h3>
-                <p className="mt-1.5 text-[0.78rem] leading-snug text-muted-foreground">{d}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
-    </SectionShell>
-  );
-}
-
-/* ---------------- 05 PERSONALIZATION ---------------- */
+/* ---------------- 04 PERSONALIZATION ---------------- */
 export function Personalize({
   selected,
   onSelect,
 }: {
-  selected: StudentTypeKey;
+  selected: StudentTypeKey | null;
   onSelect: (k: StudentTypeKey) => void;
 }) {
-  const active = studentTypes.find((s) => s.key === selected)!;
+  const active = selected ? studentTypes.find((s) => s.key === selected)! : null;
   return (
     <SectionShell id="my-path" className="bg-secondary">
       <Reveal>
         <Headline>What kind of student are you?</Headline>
-        <p className="mt-3 text-muted-foreground">
-          The same Scope Card can support different student journeys.
-        </p>
+        <Sub className="text-muted-foreground">
+          Pick one and we&apos;ll show the pathway that fits you.
+        </Sub>
       </Reveal>
 
-      <div role="tablist" aria-label="Student type" className="mt-8 flex flex-wrap gap-2">
+      <div role="tablist" aria-label="Student type" className="mt-8 flex flex-wrap gap-2.5">
         {studentTypes.map((s) => {
           const on = s.key === selected;
           return (
@@ -253,7 +179,7 @@ export function Personalize({
               id={`tab-${s.key}`}
               type="button"
               onClick={() => onSelect(s.key)}
-              className={`min-h-11 rounded-full border px-5 text-[0.72rem] font-semibold tracking-[0.12em] uppercase transition-all ${
+              className={`min-h-12 rounded-full border px-5 text-[0.95rem] font-semibold transition-all ${
                 on
                   ? "border-scope bg-scope text-white"
                   : "border-border bg-card text-muted-foreground hover:border-foreground/40"
@@ -265,53 +191,57 @@ export function Personalize({
         })}
       </div>
 
-      <div
-        role="tabpanel"
-        id={`panel-${active.key}`}
-        aria-labelledby={`tab-${active.key}`}
-        key={active.key}
-        className="reveal is-in mt-8 rounded-xl border bg-card p-6 md:p-8"
-      >
-        <p className="eyebrow text-muted-foreground">Relevant for</p>
-        <p className="mt-2 text-sm font-medium">{active.relevant.join(" · ")}</p>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {active.journey.map(([t, d]) => (
-            <div key={t} className="border-t-2 border-scope/70 pt-3">
-              <h3 className="font-display text-sm font-extrabold tracking-wide uppercase">{t}</h3>
-              <p className="mt-1 text-[0.82rem] leading-snug text-muted-foreground">{d}</p>
-            </div>
-          ))}
+      {active ? (
+        <div
+          role="tabpanel"
+          id={`panel-${active.key}`}
+          aria-labelledby={`tab-${active.key}`}
+          key={active.key}
+          className="reveal is-in mt-8 rounded-xl border bg-card p-6 md:p-8"
+        >
+          <p className="eyebrow text-scope">Your pathway</p>
+          <p className="mt-2 text-[0.95rem] font-medium text-muted-foreground">
+            {active.relevant.join(" · ")}
+          </p>
+          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {active.journey.map(([t, d]) => (
+              <div key={t} className="border-t-2 border-scope/70 pt-3">
+                <h3 className="text-base font-bold">{t}</h3>
+                <p className="mt-1 text-[0.95rem] leading-snug text-muted-foreground">{d}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-7">
+            <Cta href="#accelerator" variant="ghost">
+              Explore my path
+            </Cta>
+          </div>
         </div>
-      </div>
-
-      <div className="mt-8">
-        <Cta href="#accelerator" variant="ghost">
-          Explore my path
-        </Cta>
-      </div>
+      ) : (
+        <p className="mt-8 rounded-xl border border-dashed bg-card/60 p-8 text-center text-[0.95rem] text-muted-foreground">
+          Select an option above to see the pathway designed for you.
+        </p>
+      )}
     </SectionShell>
   );
 }
 
-/* ---------------- 06 ACCELERATOR ---------------- */
+/* ---------------- 05 ACCELERATOR ---------------- */
 export function Accelerator() {
   const [path, setPath] = useState<"creative" | "technical">("creative");
   return (
     <SectionShell id="accelerator" dark>
       <Reveal>
-        <span className="inline-block rounded-full bg-scope px-4 py-2 text-[0.65rem] font-bold tracking-[0.16em] uppercase">
-          One first-year Accelerator included
+        <span className="eyebrow inline-block rounded-full bg-scope px-4 py-2 text-white">
+          One eligible Accelerator included during Year 1
         </span>
-        <Headline className="mt-6 max-w-3xl">
-          Start with something you can actually learn.
-        </Headline>
-        <p className="mt-4 max-w-2xl text-white/65">
-          Every Scope Empowerment Card holder can choose ANY ONE eligible Scope Accelerator
-          Programme during the FIRST YEAR.
-        </p>
+        <Headline className="mt-6 max-w-3xl">Start With Something You Can Learn.</Headline>
+        <Sub className="text-white/70">
+          Choose any one eligible Scope Accelerator during your first year.
+        </Sub>
       </Reveal>
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2">
+      <div className="mt-8 flex flex-wrap gap-2.5">
         {(["creative", "technical"] as const).map((p) => {
           const on = path === p;
           return (
@@ -320,37 +250,29 @@ export function Accelerator() {
               type="button"
               aria-pressed={on}
               onClick={() => setPath(p)}
-              className={`min-h-11 rounded-xl border p-5 text-left transition-all hover:-translate-y-0.5 ${
-                on ? "border-scope bg-white/[0.04]" : "border-white/12"
+              className={`min-h-12 rounded-full border px-5 text-[0.95rem] font-semibold transition-all ${
+                on ? "border-scope bg-scope text-white" : "border-white/20 text-white/70"
               }`}
             >
-              <span className="eyebrow text-scope">Pathway</span>
-              <span className="mt-1 block font-display text-lg font-extrabold uppercase">
-                {p === "creative"
-                  ? "Creative Scope Accelerator Programme"
-                  : "Technical Scope Accelerator Options"}
-              </span>
-              <span className="mt-2 block text-[0.7rem] tracking-[0.12em] text-white/45 uppercase">
-                Included in Year 1
-              </span>
+              {p === "creative" ? "Creative" : "Technical"}
             </button>
           );
         })}
       </div>
 
-      <div className="mt-8 rounded-xl border border-white/10 p-6">
+      <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
         {path === "creative" ? (
           <>
-            <p className="text-sm text-white/70">
-              Learn how visual ideas move from concept to execution — across design, storytelling,
-              digital art and creative production. Positioned as foundational / introductory
-              accelerator exposure depending on cohort.
+            <h3 className="text-2xl font-bold tracking-[-0.02em]">Creative Scope Accelerator</h3>
+            <p className="mt-3 max-w-[660px] text-[1rem] leading-relaxed text-white/70">
+              Build foundational exposure across visual communication, digital design and creative
+              storytelling.
             </p>
-            <ul className="mt-5 flex flex-wrap gap-2">
+            <ul className="mt-6 flex flex-wrap gap-2">
               {creativeTopics.map((t) => (
                 <li
                   key={t}
-                  className="rounded-md border border-white/15 px-3 py-2 text-[0.68rem] font-medium tracking-[0.08em] text-white/80 uppercase"
+                  className="rounded-full border border-white/15 px-3.5 py-2 text-[0.85rem] font-medium text-white/85"
                 >
                   {t}
                 </li>
@@ -359,13 +281,16 @@ export function Accelerator() {
           </>
         ) : (
           <>
-            <p className="text-sm text-white/70">
-              Choose one technical learning pathway based on your interest and applicable cohort
-              availability.
+            <h3 className="text-2xl font-bold tracking-[-0.02em]">Technical Scope Accelerator</h3>
+            <p className="mt-3 max-w-[660px] text-[1rem] leading-relaxed text-white/70">
+              Choose one technical pathway based on your interest and cohort availability.
             </p>
-            <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+            <ul className="mt-6 flex flex-wrap gap-2">
               {technicalOptions.map((t) => (
-                <li key={t} className="rounded-md border border-white/12 px-4 py-3 text-sm text-white/85">
+                <li
+                  key={t}
+                  className="rounded-full border border-white/15 px-3.5 py-2 text-[0.85rem] font-medium text-white/85"
+                >
                   {t}
                 </li>
               ))}
@@ -374,12 +299,12 @@ export function Accelerator() {
         )}
       </div>
 
-      <p className="mt-5 text-[0.72rem] text-white/40">
+      <Fine className="text-white">
         Programme availability, delivery mode, cohort size, schedule, duration and eligibility may
         vary by Scope Chapter.
-      </p>
+      </Fine>
       <div className="mt-7">
-        <Cta href="#comparison" variant="ghost">
+        <Cta href="#benefits" variant="ghost">
           See what else my card unlocks
         </Cta>
       </div>
@@ -387,69 +312,92 @@ export function Accelerator() {
   );
 }
 
-/* ---------------- 07 COMPARISON ---------------- */
-export function Comparison() {
+/* ---------------- 06 UNLOCKS (card with orbiting labels) ---------------- */
+const unlocks: [string, string][] = [
+  ["Learn", "Accelerators, workshops and masterclasses"],
+  ["Build", "Projects, challenges, ideathons and hackathons"],
+  ["Showcase", "Portfolio, skills, certificates and achievements"],
+  ["Connect", "Cross-campus and ecosystem exposure"],
+  ["Grow", "Discover relevant opportunities"],
+];
+
+export function Unlocks() {
   return (
-    <SectionShell id="comparison">
+    <SectionShell id="benefits">
       <Reveal>
         <Headline className="max-w-3xl">
-          Two students can have the same qualification.
+          One card.
           <br />
-          <span className="text-muted-foreground">Their journeys can look very different.</span>
+          <span className="text-muted-foreground">Five ways to build your student journey.</span>
         </Headline>
       </Reveal>
-      <div className="mt-10 overflow-hidden rounded-xl border">
-        <div className="grid grid-cols-2 bg-secondary text-[0.65rem] font-bold tracking-[0.14em] uppercase">
-          <div className="p-3 text-muted-foreground">Typical student journey</div>
-          <div className="border-l bg-scope p-3 text-white">With Scope Empowerment Card</div>
-        </div>
-        {comparisonRows.map(([a, b], i) => (
-          <div key={a} className={`grid grid-cols-2 border-t ${i % 2 ? "bg-secondary/40" : "bg-card"}`}>
-            <div className="p-3 text-[0.82rem] leading-snug text-muted-foreground">{a}</div>
-            <div className="border-l p-3 text-[0.82rem] leading-snug font-medium">{b}</div>
+      <div className="mt-10 grid items-center gap-10 md:grid-cols-[0.95fr_1.05fr]">
+        <Reveal>
+          <div className="rounded-2xl bg-ink p-6 md:p-8" style={{ containerType: "inline-size" }}>
+            <ScopeCard />
           </div>
-        ))}
+        </Reveal>
+        <ol className="grid gap-3">
+          {unlocks.map(([t, d], i) => (
+            <li key={t} className="flex items-start gap-4 rounded-xl border bg-card p-4">
+              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-scope/10 text-[0.8rem] font-bold text-scope">
+                0{i + 1}
+              </span>
+              <span className="min-w-0">
+                <span className="block text-lg font-bold tracking-[-0.02em]">{t}</span>
+                <span className="block text-[0.95rem] text-muted-foreground">{d}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
       </div>
-      <p className="mt-8 font-display text-[clamp(1.1rem,2.6vw,1.7rem)] leading-tight font-extrabold uppercase">
-        Same education. <span className="text-scope">More evidence of what you did with it.</span>
-      </p>
     </SectionShell>
   );
 }
 
-/* ---------------- 08 PORTFOLIO ---------------- */
+/* ---------------- 07 PORTFOLIO ---------------- */
 const scattered = [
-  "Phone photos",
-  "Google Drive",
+  "Drive",
+  "Phone",
   "Certificates",
   "GitHub",
   "Sketchbook",
   "Presentations",
   "Project files",
-  "Competition certificates",
-  "Social posts",
 ];
 
-export function Portfolio({ selected }: { selected: StudentTypeKey }) {
-  const active = studentTypes.find((s) => s.key === selected)!;
+const profileTags = [
+  "Projects",
+  "Skills",
+  "Achievements",
+  "Certificates",
+  "Competitions",
+  "Hackathons",
+  "Academic Work",
+  "Creative Work",
+  "Technical Work",
+];
+
+export function Portfolio({ selected }: { selected: StudentTypeKey | null }) {
+  const active = selected ? studentTypes.find((s) => s.key === selected)! : null;
   return (
     <SectionShell id="portfolio" className="bg-secondary">
       <Reveal>
         <Headline className="max-w-3xl">
-          Your work shouldn&apos;t
+          One Student.
           <br />
-          <span className="text-muted-foreground">disappear into folders.</span>
+          One Growing Profile. <span className="text-scope">One QR.</span>
         </Headline>
       </Reveal>
 
-      <div className="mt-10 grid gap-8 md:grid-cols-[1fr_auto_1fr] md:items-center">
+      <div className="mt-10 grid gap-6 md:grid-cols-[1fr_auto_1.15fr] md:items-center">
         <Reveal>
           <p className="eyebrow text-muted-foreground">Before</p>
           <ul className="mt-3 flex flex-wrap gap-2">
             {scattered.map((s) => (
               <li
                 key={s}
-                className="rotate-[-1deg] rounded border border-dashed bg-card px-3 py-1.5 text-[0.72rem] text-muted-foreground"
+                className="rotate-[-1deg] rounded border border-dashed bg-card px-3 py-2 text-[0.85rem] text-muted-foreground"
               >
                 {s}
               </li>
@@ -457,146 +405,54 @@ export function Portfolio({ selected }: { selected: StudentTypeKey }) {
           </ul>
         </Reveal>
 
-        <div aria-hidden="true" className="text-center font-display text-2xl text-scope">
+        <div aria-hidden="true" className="text-center text-2xl text-scope">
           →
         </div>
 
         <Reveal>
-          <div className="rounded-xl border bg-card p-6">
+          <div className="rounded-2xl border bg-card p-6 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.5)]">
             <div className="flex items-center gap-4">
               <QrPlaceholder size="lg" />
-              <div>
-                <p className="eyebrow text-scope">One Scope profile</p>
-                <p className="font-display text-lg font-extrabold uppercase">{MEMBER.name}</p>
-                <p className="text-[0.72rem] tracking-wider text-muted-foreground">{MEMBER.id}</p>
-                <p className="text-[0.72rem] tracking-wider text-muted-foreground">
-                  5-YEAR MEMBER · 60-MONTH VALIDITY
-                </p>
+              <div className="min-w-0">
+                <p className="eyebrow text-scope">Scope Profile</p>
+                <p className="text-xl font-bold tracking-[-0.02em]">{MEMBER.name}</p>
+                <p className="text-[0.85rem] text-muted-foreground">{MEMBER.id}</p>
               </div>
             </div>
             <ul className="mt-5 flex flex-wrap gap-2">
-              {[
-                "Projects",
-                "Skills",
-                "Certificates",
-                "Achievements",
-                "Competitions",
-                "Hackathons",
-                "Events",
-                "Creative Work",
-                "Technical Work",
-                "Academic Work",
-              ].map((t) => (
-                <li key={t} className="rounded-full bg-secondary px-3 py-1.5 text-[0.7rem]">
+              {profileTags.map((t) => (
+                <li key={t} className="rounded-full bg-secondary px-3 py-1.5 text-[0.85rem]">
                   {t}
                 </li>
               ))}
             </ul>
-            <div className="mt-5 border-t pt-4">
-              <p className="eyebrow text-muted-foreground">
-                {active.label} portfolio can include
-              </p>
-              <p className="mt-2 text-sm font-medium">{active.portfolio.join(" · ")}</p>
-            </div>
+            {active && (
+              <div className="mt-5 border-t pt-4">
+                <p className="eyebrow text-muted-foreground">{active.label} work can include</p>
+                <p className="mt-2 text-[0.95rem] font-medium">{active.portfolio.join(" · ")}</p>
+              </div>
+            )}
           </div>
         </Reveal>
       </div>
 
-      <p className="mt-8 font-display text-[clamp(1.1rem,2.4vw,1.6rem)] font-extrabold uppercase">
+      <p className="mt-9 text-[clamp(1.2rem,2.6vw,1.8rem)] font-extrabold tracking-[-0.02em]">
         Scan one QR. <span className="text-scope">See the journey.</span>
       </p>
       <div className="mt-6">
-        <Cta href="#journey" variant="ghost">
-          See the 5-year journey
+        <Cta href="#value" variant="ghost">
+          See the value
         </Cta>
       </div>
     </SectionShell>
   );
 }
 
-/* ---------------- 09 FIVE-YEAR JOURNEY ---------------- */
-const timeline: [string, string][] = [
-  ["START", "Scope Card Activated"],
-  ["LEARN", "Year-1 Accelerator"],
-  ["BUILD", "Projects and challenges"],
-  ["PARTICIPATE", "Events, ideathons, hackathons and competitions"],
-  ["SHOWCASE", "Portfolio grows"],
-  ["CONNECT", "Cross-campus exposure"],
-  ["DISCOVER", "Career and opportunity ecosystem"],
-];
-
-export function Journey() {
-  const { ref, inView } = useReveal<HTMLDivElement>();
-  return (
-    <SectionShell id="journey" dark>
-      <Reveal>
-        <Headline className="max-w-3xl">
-          Your card doesn&apos;t have to become more valuable.
-          <br />
-          <span className="text-scope">You do.</span>
-        </Headline>
-        <p className="mt-4 max-w-2xl text-white/60">
-          Five years covers most of a student journey — school to college, first project to first
-          opportunity. The membership stays while your evidence accumulates.
-        </p>
-      </Reveal>
-
-      <div ref={ref} className="relative mt-12 pl-8 md:pl-0">
-        <div className="absolute top-0 bottom-0 left-2 w-px bg-white/12 md:hidden" />
-        <div
-          className="absolute top-0 left-2 w-px bg-scope transition-[height] duration-[1400ms] ease-out md:hidden"
-          style={{ height: inView ? "100%" : "0%" }}
-        />
-        <div className="hidden md:block">
-          <div className="relative h-px w-full bg-white/12">
-            <div
-              className="absolute inset-y-0 left-0 bg-scope transition-[width] duration-[1400ms] ease-out"
-              style={{ width: inView ? "100%" : "0%" }}
-            />
-          </div>
-        </div>
-        <ol className="grid gap-6 md:mt-6 md:grid-cols-7 md:gap-3">
-          {timeline.map(([t, d]) => (
-            <li key={t} className="relative">
-              <span
-                aria-hidden="true"
-                className="absolute top-1.5 -left-[26px] h-2.5 w-2.5 rounded-full bg-scope md:static md:mb-3 md:block"
-              />
-              <h3 className="font-display text-sm font-extrabold tracking-[0.1em] uppercase">{t}</h3>
-              <p className="mt-1 text-[0.78rem] leading-snug text-white/55">{d}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-
-      <p className="mt-12 font-display text-[clamp(1.1rem,2.6vw,1.7rem)] font-extrabold uppercase">
-        Five years gives your student story <span className="text-white/45">time to grow.</span>
-      </p>
-      <p className="mt-3 text-[0.72rem] text-white/40">
-        This is an illustrative student journey, not a guaranteed yearly programme sequence.
-      </p>
-    </SectionShell>
-  );
-}
-
-/* ---------------- 10 LEARN / PARTICIPATE / DISCOVER ---------------- */
+/* ---------------- 08 PARTICIPATION ECOSYSTEM ---------------- */
 const lpd: [string, string[]][] = [
-  ["LEARN", ["Workshops", "Masterclasses", "Webinars", "Seminars", "Industry Sessions"]],
-  [
-    "PARTICIPATE",
-    ["Ideathons", "Hackathons", "Game Jams", "Competitions", "Projects", "Creative Challenges"],
-  ],
-  [
-    "DISCOVER",
-    [
-      "Internships",
-      "Entry-Level Jobs",
-      "Campus Opportunities",
-      "Creative Opportunities",
-      "Technology Opportunities",
-      "Industry Interactions",
-    ],
-  ],
+  ["Learn", ["Workshops", "Masterclasses", "Webinars", "Industry Sessions"]],
+  ["Participate", ["Ideathons", "Hackathons", "Game Jams", "Competitions", "Projects"]],
+  ["Discover", ["Internships", "Entry-Level Jobs", "Campus Opportunities", "Industry Interactions"]],
 ];
 
 export function Ecosystemreach() {
@@ -609,50 +465,156 @@ export function Ecosystemreach() {
           <span className="text-muted-foreground">Not the boundary.</span>
         </Headline>
       </Reveal>
-      <div className="mt-10 grid gap-px overflow-hidden rounded-xl border bg-border md:grid-cols-3">
+      <div className="mt-9 grid gap-px overflow-hidden rounded-xl border bg-border md:grid-cols-3">
         {lpd.map(([t, items]) => (
-          <Reveal key={t} className="bg-card p-6">
-            <h3 className="font-display text-lg font-extrabold tracking-wide text-scope uppercase">
-              {t}
-            </h3>
+          <div key={t} className="bg-card p-6">
+            <h3 className="text-lg font-bold text-scope">{t}</h3>
             <ul className="mt-3 space-y-1.5">
               {items.map((i) => (
-                <li key={i} className="text-sm text-muted-foreground">
+                <li key={i} className="text-[0.95rem] text-muted-foreground">
                   {i}
                 </li>
               ))}
             </ul>
-          </Reveal>
+          </div>
         ))}
       </div>
-
-      <p className="mt-10 font-display text-[clamp(1.1rem,2.6vw,1.7rem)] leading-tight font-extrabold uppercase">
-        You don&apos;t have to be a programmer <span className="text-scope">to solve a problem.</span>
-      </p>
-      <ul className="mt-5 flex flex-wrap items-center gap-2">
-        {[
-          ["TECH", "Build"],
-          ["DESIGN", "Experience"],
-          ["BUSINESS", "Viability"],
-          ["RESEARCH", "Understand"],
-          ["COMMUNICATION", "Present"],
-        ].map(([a, b]) => (
-          <li key={a} className="rounded-lg border bg-card px-4 py-2">
-            <span className="block text-[0.62rem] font-bold tracking-[0.14em] uppercase">{a}</span>
-            <span className="block text-[0.72rem] text-muted-foreground">{b}</span>
-          </li>
-        ))}
-        <li className="font-display text-sm font-extrabold text-scope uppercase">→ One team</li>
-      </ul>
-      <p className="mt-6 text-[0.72rem] text-muted-foreground">
+      <Fine>
         Access and participation remain subject to programme/event eligibility, availability, seats
         and respective terms.
+      </Fine>
+    </SectionShell>
+  );
+}
+
+/* ---------------- 09 VALUE COMPARISON ---------------- */
+const separateRows: [string, string][] = [
+  ["Creative Scope Accelerator", "₹17,860*"],
+  ["Scope Digital Portfolio", "Not separately sold"],
+  ["Workshops & Masterclasses", "Member access where eligible"],
+  ["Ideathons / Hackathons / Challenges", "Member access where eligible"],
+  ["Career & Opportunity Ecosystem", "Member access"],
+  ["Scope Profile / QR Identity", "Included with membership"],
+  ["Friends & Family Benefit", "Up to ₹30,000 eligible cashback"],
+];
+
+const included = [
+  "One eligible Accelerator in Year 1",
+  "Scope Digital Portfolio",
+  "QR-linked Profile",
+  "Applicable Workshops & Masterclasses",
+  "Ideathons / Hackathons / Challenges",
+  "Opportunity Ecosystem",
+  "Member Privileges",
+  "Friends & Family Benefit",
+];
+
+export function ValueComparison() {
+  return (
+    <SectionShell id="value" className="bg-secondary">
+      <Reveal>
+        <Headline className="max-w-3xl">Look at What ₹2,499 Actually Unlocks.</Headline>
+      </Reveal>
+
+      <div className="mt-9 grid gap-5 md:grid-cols-2">
+        <div className="rounded-2xl border bg-card p-6 md:p-8">
+          <p className="eyebrow text-muted-foreground">If accessed separately</p>
+          <dl className="mt-5 divide-y">
+            {separateRows.map(([k, v]) => (
+              <div key={k} className="grid grid-cols-[minmax(0,1fr)_auto] gap-4 py-3">
+                <dt className="min-w-0 text-[0.95rem]">{k}</dt>
+                <dd className="text-right text-[0.95rem] font-semibold">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="rounded-2xl bg-ink p-6 text-white md:p-8">
+          <p className="eyebrow text-scope">With Scope Empowerment Card</p>
+          <p className="mt-4 text-[clamp(2.8rem,9vw,4.6rem)] leading-none font-extrabold tracking-[-0.03em]">
+            ₹2,499
+          </p>
+          <p className="eyebrow mt-3 text-white/60">One-time · 5 years / 60 months</p>
+          <ul className="mt-6 grid gap-2.5">
+            {included.map((i) => (
+              <li key={i} className="flex gap-3 text-[0.95rem] text-white/85">
+                <span aria-hidden="true" className="text-scope">
+                  ✓
+                </span>
+                {i}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <Fine>
+        *₹17,860 refers to the stated reference value of the applicable Creative Accelerator
+        programme. Other Accelerator options may have different standalone/reference values.
+      </Fine>
+    </SectionShell>
+  );
+}
+
+/* ---------------- 10 JOURNEY COMPARISON ---------------- */
+export function JourneyComparison() {
+  return (
+    <SectionShell id="journey">
+      <Reveal>
+        <Headline className="max-w-3xl">The Bigger Difference Isn&apos;t Only the Price.</Headline>
+      </Reveal>
+      <div className="mt-9 overflow-hidden rounded-xl border">
+        <div className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] bg-secondary text-[0.72rem] font-bold tracking-[0.06em] uppercase">
+          <div className="p-3 text-muted-foreground">Area</div>
+          <div className="border-l p-3 text-muted-foreground">Without a structured ecosystem</div>
+          <div className="border-l bg-scope p-3 text-white">With Scope</div>
+        </div>
+        {journeyRows.map(([area, a, b], i) => (
+          <div
+            key={area}
+            className={`grid grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] border-t ${
+              i % 2 ? "bg-secondary/40" : "bg-card"
+            }`}
+          >
+            <div className="p-3 text-[0.85rem] font-semibold">{area}</div>
+            <div className="border-l p-3 text-[0.85rem] leading-snug text-muted-foreground">{a}</div>
+            <div className="border-l p-3 text-[0.85rem] leading-snug font-medium">{b}</div>
+          </div>
+        ))}
+      </div>
+      <p className="mt-8 text-[clamp(1.2rem,2.6vw,1.8rem)] font-extrabold tracking-[-0.02em]">
+        Same education. <span className="text-scope">More evidence of what you did with it.</span>
       </p>
     </SectionShell>
   );
 }
 
-/* ---------------- 11 FRIENDS & FAMILY ---------------- */
+/* ---------------- 11 WHY ₹2,499 FEELS DIFFERENT ---------------- */
+export function WhyDifferent() {
+  return (
+    <SectionShell dark className="!py-16 md:!py-24">
+      <div className="grid gap-8 md:grid-cols-3">
+        {[
+          ["One short course", "can cost more than ₹2,499."],
+          ["One event", "can end in one day."],
+          ["One certificate", "can sit in a folder."],
+        ].map(([a, b]) => (
+          <div key={a} className="border-t border-white/15 pt-4">
+            <p className="text-lg font-bold">{a}</p>
+            <p className="mt-1 text-[0.95rem] text-white/55">{b}</p>
+          </div>
+        ))}
+      </div>
+      <p className="mt-10 max-w-3xl text-[clamp(1.3rem,3vw,2.1rem)] leading-tight font-extrabold tracking-[-0.02em]">
+        The Scope Empowerment Card connects{" "}
+        <span className="text-scope">learning, participation, portfolio and opportunity</span>{" "}
+        across a 5-year membership period.
+      </p>
+    </SectionShell>
+  );
+}
+
+/* ---------------- 12 FRIENDS & FAMILY ---------------- */
 export function Cashback() {
   return (
     <SectionShell id="cashback" className="bg-[oklch(0.96_0.03_75)]">
@@ -660,14 +622,10 @@ export function Cashback() {
         <Headline className="max-w-3xl">
           Sometimes the best opportunity is the one you help someone else find.
         </Headline>
-        <p className="mt-5 max-w-2xl text-muted-foreground">
-          If someone you know is searching for an eligible learning programme, your Scope membership
-          may help you introduce them to a suitable Red Apple Learning programme.
-        </p>
       </Reveal>
 
-      <div className="mt-10 grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
-        <ol className="space-y-3">
+      <div className="mt-9 grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+        <ol className="space-y-2.5">
           {[
             "Someone you know",
             "Needs the right learning opportunity",
@@ -676,93 +634,80 @@ export function Cashback() {
             "You may get rewarded",
           ].map((s, i) => (
             <li key={s} className="flex items-center gap-3">
-              <span className="font-display text-xs font-bold text-scope">0{i + 1}</span>
-              <span className="rounded-lg border bg-card px-4 py-2.5 text-sm font-medium">{s}</span>
+              <span className="text-[0.8rem] font-bold text-scope">0{i + 1}</span>
+              <span className="rounded-lg border bg-card px-4 py-2.5 text-[0.95rem] font-medium">
+                {s}
+              </span>
             </li>
           ))}
         </ol>
 
-        <Reveal className="rounded-xl border bg-card p-8 text-center">
-          <p className="eyebrow text-muted-foreground">Scope Friends &amp; Family Cashback</p>
-          <p className="mt-3 font-display text-[clamp(1.9rem,5vw,3rem)] leading-none font-extrabold text-scope">
-            UP TO ₹30,000
+        <Reveal className="rounded-2xl border bg-card p-8 text-center">
+          <p className="eyebrow text-muted-foreground">Scope Friends &amp; Family</p>
+          <p className="mt-3 text-[clamp(2.2rem,6vw,3.4rem)] leading-none font-extrabold tracking-[-0.03em] text-scope">
+            Up to ₹30,000
           </p>
-          <p className="mt-2 text-[0.7rem] font-semibold tracking-[0.18em] uppercase">Cashback</p>
-          <ul className="mt-6 flex flex-wrap justify-center gap-2">
-            {["FRIEND", "SIBLING", "COUSIN", "CLASSMATE", "FAMILY MEMBER"].map((p) => (
-              <li key={p} className="rounded-full bg-secondary px-3 py-1.5 text-[0.65rem] tracking-[0.1em]">
-                {p}
-              </li>
-            ))}
-          </ul>
+          <p className="eyebrow mt-2">Cashback</p>
         </Reveal>
       </div>
 
-      <p className="mt-10 font-display text-[clamp(1rem,2.3vw,1.5rem)] leading-tight font-extrabold uppercase">
+      <p className="mt-9 text-[clamp(1.1rem,2.4vw,1.6rem)] leading-tight font-extrabold tracking-[-0.02em]">
         Helping someone find the right opportunity should feel good.
         <br />
-        <span className="text-muted-foreground">Getting rewarded for it is a bonus.</span>
+        <span className="text-muted-foreground">Getting rewarded is a bonus.</span>
       </p>
-      <p className="mt-4 text-[0.72rem] text-muted-foreground">
+      <Fine>
         Applicable cashback may range from ₹1,000 to ₹30,000 depending on programme, campaign,
         successful enrolment, payment realisation and prevailing terms.
-      </p>
+      </Fine>
     </SectionShell>
   );
 }
 
-/* ---------------- 12 PARTNERS ---------------- */
+/* ---------------- 13 PARTNERS ---------------- */
 export function Partners() {
   return (
-    <SectionShell id="partners">
+    <SectionShell id="partners" className="!py-14 md:!py-20">
       <Reveal>
-        <Headline className="max-w-3xl">
-          You&apos;re not just joining a card.
-          <br />
-          <span className="text-muted-foreground">You&apos;re entering an ecosystem.</span>
-        </Headline>
+        <Headline className="max-w-3xl">An Ecosystem Around Student Growth.</Headline>
       </Reveal>
-      <div className="mt-10 grid gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-8 grid gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-4">
         {partners.map((p) => (
-          <a
-            key={p.name}
-            href={p.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group bg-card p-6 transition-colors hover:bg-secondary"
-          >
-            <span className="eyebrow text-scope">{p.tag}</span>
-            <span className="mt-3 block font-display text-lg leading-tight font-extrabold uppercase">
-              {p.name}
-            </span>
-            <span className="mt-1 block text-[0.78rem] text-muted-foreground">{p.role}</span>
-            <span className="mt-4 inline-block text-[0.68rem] tracking-[0.12em] text-muted-foreground uppercase transition-colors group-hover:text-scope">
-              Visit ↗
-            </span>
-          </a>
+          <li key={p.name}>
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block bg-card p-5 transition-colors hover:bg-secondary"
+            >
+              <span className="eyebrow text-scope">{p.tag}</span>
+              <span className="mt-2 block text-lg font-bold tracking-[-0.02em]">{p.name}</span>
+              <span className="mt-1 block text-[0.9rem] text-muted-foreground">{p.role}</span>
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </SectionShell>
   );
 }
 
-/* ---------------- 13 ELIGIBILITY ---------------- */
+/* ---------------- 14 ELIGIBILITY ---------------- */
 export function Eligibility() {
   return (
     <SectionShell id="eligibility" dark>
       <Reveal>
-        <Eyebrow>Important</Eyebrow>
-        <Headline className="max-w-3xl">
+        <p className="eyebrow text-scope">Important</p>
+        <Headline className="mt-4 max-w-3xl">
           You can&apos;t simply buy the Scope Empowerment Card.
           <br />
           <span className="text-scope">You become eligible for it.</span>
         </Headline>
-        <p className="mt-5 max-w-2xl text-white/65">
-          The Scope Empowerment Card is available only to eligible students enlisted with Scope
-          Innovation Lab through participating institutions / active Scope Innovation Lab Chapters.
-        </p>
+        <Sub className="text-white/70">
+          Available only to eligible students enlisted with Scope Innovation Lab through
+          participating institutions.
+        </Sub>
       </Reveal>
-      <ol className="mt-10 flex flex-wrap items-center gap-3">
+      <ol className="mt-9 flex flex-wrap items-center gap-3">
         {[
           "Participating institution",
           "Scope Innovation Lab",
@@ -772,96 +717,57 @@ export function Eligibility() {
         ].map((s, i, arr) => (
           <li key={s} className="flex items-center gap-3">
             <span
-              className={`rounded-lg border px-4 py-2.5 text-[0.72rem] font-semibold tracking-[0.1em] uppercase ${
-                i === arr.length - 1 ? "border-scope bg-scope text-white" : "border-white/15 text-white/75"
+              className={`rounded-lg border px-4 py-2.5 text-[0.9rem] font-semibold ${
+                i === arr.length - 1
+                  ? "border-scope bg-scope text-white"
+                  : "border-white/15 text-white/75"
               }`}
             >
               {s}
             </span>
-            {i < arr.length - 1 && <span aria-hidden="true" className="text-white/30">→</span>}
+            {i < arr.length - 1 && (
+              <span aria-hidden="true" className="text-white/30">
+                →
+              </span>
+            )}
           </li>
         ))}
       </ol>
       <div className="mt-9">
-        <Cta href="#value">Check my eligibility</Cta>
+        <Cta href="#price">Check my eligibility</Cta>
       </div>
     </SectionShell>
   );
 }
 
-/* ---------------- 14 VALUE + PRICE ---------------- */
-export function ValueAndPrice() {
+/* ---------------- 15 PRICE REVEAL ---------------- */
+export function PriceReveal() {
   return (
-    <SectionShell id="value" className="bg-secondary">
-      <Reveal>
-        <Headline>What are you actually applying for?</Headline>
-      </Reveal>
-      <div className="mt-8 grid gap-3 sm:grid-cols-3">
-        {[
-          ["NOT JUST", "A plastic card."],
-          ["NOT JUST", "A course."],
-          ["NOT JUST", "A portfolio."],
-        ].map(([a, b], i) => (
-          <div key={i} className="rounded-lg border bg-card p-5">
-            <span className="eyebrow text-muted-foreground">{a}</span>
-            <span className="mt-1 block font-display text-lg font-extrabold">{b}</span>
+    <SectionShell id="price" className="bg-[color-mix(in_oklab,var(--scope)_8%,var(--background))]">
+      <div className="grid items-center gap-10 md:grid-cols-2">
+        <Reveal>
+          <div className="rounded-2xl bg-ink p-6 md:p-8" style={{ containerType: "inline-size" }}>
+            <ScopeCard />
           </div>
-        ))}
-      </div>
-
-      <p className="mt-10 eyebrow text-scope">You&apos;re applying for</p>
-      <ul className="mt-3 flex flex-wrap items-center gap-2">
-        {[
-          "5-Year Scope Membership",
-          "One Year-1 Accelerator",
-          "One growing student profile",
-          "Participation ecosystem",
-          "Opportunity discovery",
-          "Member privileges",
-          "Friends & Family benefit",
-        ].map((s, i, arr) => (
-          <li key={s} className="flex items-center gap-2">
-            <span className="rounded-full border bg-card px-4 py-2 text-[0.75rem] font-semibold">
-              {s}
-            </span>
-            {i < arr.length - 1 && <span aria-hidden="true" className="text-scope">+</span>}
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-14 grid items-center gap-10 rounded-2xl bg-ink p-6 text-white md:grid-cols-2 md:p-10">
-        <div style={{ containerType: "inline-size" }}>
-          <ScopeCard />
-        </div>
-        <div>
-          <p className="eyebrow text-scope">Your Scope Empowerment Card</p>
-          <p className="mt-2 text-sm text-white/65">
-            5-Year / 60-Month Membership · One eligible Accelerator included during Year 1
-          </p>
-          <p className="mt-6 font-display text-[clamp(2.6rem,8vw,4.6rem)] leading-none font-extrabold">
+        </Reveal>
+        <div className="text-center md:text-left">
+          <Headline>Your Scope Empowerment Card</Headline>
+          <p className="eyebrow mt-3 text-muted-foreground">5-year / 60-month membership</p>
+          <p className="mt-6 text-[clamp(3rem,10vw,5.2rem)] leading-none font-extrabold tracking-[-0.04em]">
             ₹2,499
           </p>
-          <p className="mt-2 text-[0.7rem] font-semibold tracking-[0.2em] text-white/60 uppercase">
-            One-time student fee
+          <p className="eyebrow mt-3 text-muted-foreground">One-time student fee</p>
+          <p className="mt-5 text-2xl font-bold text-scope">≈ ₹500 / year</p>
+          <p className="text-[0.9rem] text-muted-foreground">
+            Equivalent across the five-year membership period.
           </p>
-          <p className="mt-5 font-display text-xl font-extrabold text-cyan-accent">≈ ₹500 / year</p>
-          <p className="text-[0.7rem] tracking-[0.14em] text-white/45 uppercase">
-            Equivalent over the 5-year membership period
+          <p className="mx-auto mt-5 max-w-[520px] text-[0.85rem] text-muted-foreground md:mx-0">
+            ₹2,499 is paid once for the current five-year membership term. This is not an instalment
+            plan.
           </p>
-          <p className="mt-4 text-[0.72rem] text-white/45">
-            ₹2,499 is paid once for the current five-year membership term. It is not an annual
-            instalment plan.
-          </p>
-          <p className="mt-4 inline-block rounded-full border border-white/20 px-3 py-1.5 text-[0.65rem] font-semibold tracking-[0.14em] uppercase">
-            Renewable after 5 years
-          </p>
-          <p className="mt-6 font-display text-base font-extrabold uppercase">
-            One card. One first-year Accelerator. Five years to build more.
-          </p>
+          <p className="mt-5 text-lg font-bold">One first-year Accelerator included.</p>
           <div className="mt-7">
-            <Cta href="#payment" variant="light">
-              Apply for my Scope Card
-            </Cta>
+            <Cta href="#payment">Apply for my Scope Card</Cta>
           </div>
         </div>
       </div>
@@ -869,14 +775,14 @@ export function ValueAndPrice() {
   );
 }
 
-/* ---------------- 17 FAQ ---------------- */
+/* ---------------- 16 FAQ ---------------- */
 export function Faq({ items }: { items: [string, string][] }) {
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
   return (
-    <SectionShell id="faq" tall={false}>
+    <SectionShell id="faq" className="!py-14 md:!py-20">
       <Headline>Questions students ask</Headline>
       <div className="mt-8 divide-y rounded-xl border bg-card">
-        {items.map(([q, a], i) => {
+        {items.slice(0, 8).map(([q, a], i) => {
           const on = open === i;
           return (
             <div key={q}>
@@ -886,10 +792,13 @@ export function Faq({ items }: { items: [string, string][] }) {
                   aria-expanded={on}
                   aria-controls={`faq-${i}`}
                   onClick={() => setOpen(on ? null : i)}
-                  className="flex min-h-11 w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm font-semibold"
+                  className="flex min-h-12 w-full items-center justify-between gap-4 px-5 py-4 text-left text-[1rem] font-semibold"
                 >
                   {q}
-                  <span aria-hidden="true" className={`text-scope transition-transform ${on ? "rotate-45" : ""}`}>
+                  <span
+                    aria-hidden="true"
+                    className={`text-scope transition-transform ${on ? "rotate-45" : ""}`}
+                  >
                     +
                   </span>
                 </button>
@@ -897,7 +806,7 @@ export function Faq({ items }: { items: [string, string][] }) {
               <div
                 id={`faq-${i}`}
                 hidden={!on}
-                className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground"
+                className="max-w-[700px] px-5 pb-5 text-[0.95rem] leading-relaxed text-muted-foreground"
               >
                 {a}
               </div>
@@ -909,7 +818,7 @@ export function Faq({ items }: { items: [string, string][] }) {
   );
 }
 
-/* ---------------- 18 FINAL CTA ---------------- */
+/* ---------------- 17 FINAL CTA ---------------- */
 export function FinalCta() {
   return (
     <section className="relative overflow-hidden bg-ink px-5 py-20 text-white md:px-10 md:py-28">
@@ -922,23 +831,27 @@ export function FinalCta() {
         }}
       />
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
-        <div style={{ containerType: "inline-size" }}>
+        <div className="mx-auto w-full max-w-[480px]" style={{ containerType: "inline-size" }}>
           <ScopeCard />
         </div>
         <div>
-          <Headline>Five years from now, what will your student story show?</Headline>
-          <p className="mt-6 text-[0.72rem] font-semibold tracking-[0.2em] text-white/60 uppercase">
+          <Headline>
+            Five Years From Now,
+            <br />
+            <span className="text-white/55">What Will Your Student Story Show?</span>
+          </Headline>
+          <p className="mt-6 max-w-[620px] text-[1.05rem] text-white/70">
             Skills. Projects. Experiences. Achievements. People you met. Things you built.
           </p>
-          <p className="mt-6 font-display text-xl font-extrabold uppercase">Start building it now.</p>
-          <p className="mt-4 text-sm text-white/60">
-            Scope Empowerment Card · ₹2,499 one-time · 5 Years / 60 Months · One eligible Accelerator
-            included in Year 1
+          <p className="mt-6 text-xl font-bold">Start building it now.</p>
+          <p className="mt-4 text-[0.95rem] text-white/60">
+            Scope Empowerment Card · ₹2,499 one-time · 5 years / 60 months · One eligible Accelerator
+            included during Year 1
           </p>
           <div className="mt-8">
             <Cta href="#payment">Apply for my Scope Card</Cta>
           </div>
-          <p className="mt-8 text-[0.72rem] text-white/40">
+          <p className="mt-8 text-[0.8rem] text-white/40">
             Exclusive to eligible students enlisted with Scope Innovation Lab.
           </p>
         </div>

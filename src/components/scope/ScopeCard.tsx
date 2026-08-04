@@ -66,19 +66,19 @@ export function ScopeCard({ className = "", tilt = true }: { className?: string;
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="inline-block h-3 w-3 rounded-[2px] bg-scope" />
-                <span className="font-display text-[clamp(0.8rem,2.4cqw,1.05rem)] leading-none font-extrabold tracking-[0.14em]">
+                <span className="text-[clamp(0.85rem,2.5cqw,1.1rem)] leading-none font-extrabold tracking-[0.06em]">
                   SCOPE
                 </span>
               </div>
-              <div className="mt-0.5 text-[clamp(0.4rem,1.3cqw,0.55rem)] tracking-[0.28em] text-white/60">
+              <div className="mt-0.5 text-[clamp(0.4rem,1.3cqw,0.55rem)] tracking-[0.08em] text-white/60">
                 INNOVATION LAB
               </div>
             </div>
             <div className="text-right">
-              <div className="text-[clamp(0.42rem,1.3cqw,0.6rem)] font-semibold tracking-[0.2em] text-scope">
+              <div className="text-[clamp(0.42rem,1.3cqw,0.6rem)] font-semibold tracking-[0.08em] text-scope">
                 EMPOWERMENT CARD
               </div>
-              <div className="mt-1 text-[clamp(0.34rem,1.1cqw,0.47rem)] tracking-[0.14em] text-white/45">
+              <div className="mt-1 text-[clamp(0.34rem,1.1cqw,0.47rem)] tracking-[0.06em] text-white/45">
                 LEARN. BUILD. SHOWCASE. CONNECT. GROW.
               </div>
             </div>
@@ -86,12 +86,12 @@ export function ScopeCard({ className = "", tilt = true }: { className?: string;
 
           <div className="flex items-end justify-between gap-4">
             <div className="min-w-0">
-              <div className="font-display text-[clamp(0.85rem,3cqw,1.35rem)] leading-tight font-bold tracking-tight">
+              <div className="text-[clamp(0.9rem,3.1cqw,1.4rem)] leading-tight font-bold tracking-[-0.02em]">
                 {MEMBER.name}
               </div>
               <div className="mt-2 grid grid-cols-2 gap-x-5 gap-y-2">
                 <div>
-                  <div className="text-[clamp(0.3rem,1cqw,0.42rem)] tracking-[0.18em] text-white/45">
+                  <div className="text-[clamp(0.3rem,1cqw,0.42rem)] tracking-[0.06em] text-white/45">
                     MEMBERSHIP NUMBER
                   </div>
                   <div className="text-[clamp(0.5rem,1.5cqw,0.72rem)] font-semibold tracking-wider">
@@ -99,7 +99,7 @@ export function ScopeCard({ className = "", tilt = true }: { className?: string;
                   </div>
                 </div>
                 <div>
-                  <div className="text-[clamp(0.3rem,1cqw,0.42rem)] tracking-[0.18em] text-white/45">
+                  <div className="text-[clamp(0.3rem,1cqw,0.42rem)] tracking-[0.06em] text-white/45">
                     SCOPE CHAPTER
                   </div>
                   <div className="text-[clamp(0.45rem,1.3cqw,0.62rem)] font-medium tracking-wide text-white/85">
@@ -107,7 +107,7 @@ export function ScopeCard({ className = "", tilt = true }: { className?: string;
                   </div>
                 </div>
                 <div>
-                  <div className="text-[clamp(0.3rem,1cqw,0.42rem)] tracking-[0.18em] text-white/45">
+                  <div className="text-[clamp(0.3rem,1cqw,0.42rem)] tracking-[0.06em] text-white/45">
                     MEMBERSHIP
                   </div>
                   <div className="text-[clamp(0.45rem,1.3cqw,0.62rem)] font-semibold tracking-wide">
@@ -115,7 +115,7 @@ export function ScopeCard({ className = "", tilt = true }: { className?: string;
                   </div>
                 </div>
                 <div>
-                  <div className="text-[clamp(0.3rem,1cqw,0.42rem)] tracking-[0.18em] text-white/45">
+                  <div className="text-[clamp(0.3rem,1cqw,0.42rem)] tracking-[0.06em] text-white/45">
                     VALIDITY
                   </div>
                   <div className="text-[clamp(0.45rem,1.3cqw,0.62rem)] font-semibold tracking-wide">

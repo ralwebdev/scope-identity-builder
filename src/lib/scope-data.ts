@@ -106,22 +106,18 @@ export const acceleratorPreferences = [
   "Decide Later",
 ];
 
-export const comparisonRows: [string, string][] = [
-  ["Academic syllabus", "Academic syllabus + selected learning beyond it"],
-  ["Assignments", "Projects + challenges + participation"],
-  ["Certificates stored separately", "Centralised achievement record"],
-  ["Portfolio often created late", "Portfolio can start growing earlier"],
-  ["Activities scattered", "One QR-linked Scope profile"],
-  ["Networking mainly within institution", "Cross-campus ecosystem exposure"],
-  ["Competitions discovered individually", "Eligible Scope competitions / challenges"],
-  ["Opportunity search often begins late", "Earlier opportunity discovery"],
-  ["Learning limited largely to curriculum", "One eligible Accelerator during Year 1"],
-  ["Student ID shows institution", "Scope identity showcases participation beyond institution"],
-  [
-    "Personal network benefits mainly yourself",
-    "Help others discover eligible learning opportunities and receive applicable cashback",
-  ],
+export const journeyRows: [string, string, string][] = [
+  ["Learning", "Syllabus mainly", "Syllabus + selected learning beyond it"],
+  ["Projects", "Mostly academic", "Academic + eligible challenges/projects"],
+  ["Portfolio", "Often built near graduation", "Can grow during student years"],
+  ["Achievements", "Scattered", "Centralised profile"],
+  ["Competitions", "Individually discovered", "Curated eligible opportunities"],
+  ["Networking", "Mostly campus", "Cross-campus ecosystem exposure"],
+  ["Opportunity Search", "Often starts late", "Earlier opportunity discovery"],
+  ["Identity", "Student ID", "Student ID + Scope Profile"],
+  ["Friends & Family", "No member benefit", "Eligible cashback opportunity"],
 ];
+
 
 export const partners = [
   {
