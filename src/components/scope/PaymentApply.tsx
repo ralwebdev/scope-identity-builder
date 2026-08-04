@@ -16,7 +16,7 @@ function PaymentQr() {
       {broken ? (
         <div className="flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-ink/30 p-4">
           <QrPlaceholder size="lg" />
-          <p className="font-display text-sm font-extrabold tracking-[0.14em] text-ink uppercase">
+          <p className="text-base font-bold text-ink">
             Payment QR
           </p>
           <p className="text-[0.68rem] leading-snug text-muted-foreground">
@@ -34,7 +34,7 @@ function PaymentQr() {
           className="aspect-square w-full rounded-lg object-contain"
         />
       )}
-      <p className="mt-3 text-[0.7rem] font-bold tracking-[0.16em] text-ink uppercase">
+      <p className="mt-3 eyebrow text-ink">
         Scan to pay ₹2,499
       </p>
     </div>
@@ -44,18 +44,18 @@ function PaymentQr() {
 export function PaymentSection() {
   return (
     <SectionShell id="payment" className="bg-secondary" tall={false}>
-      <Headline>Ready to apply?</Headline>
-      <p className="mt-3 text-[0.78rem] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
-        Complete your Scope Empowerment Card payment first.
+      <Headline>Pay ₹2,499, then complete your application.</Headline>
+      <p className="mt-4 max-w-[660px] text-[1.05rem] text-muted-foreground">
+        Scan the authorised QR, copy your UTR / Transaction ID, then fill the form below.
       </p>
 
       <div className="mt-8 grid gap-8 rounded-2xl border bg-card p-6 md:grid-cols-2 md:p-8">
         <div>
           <p className="eyebrow text-scope">Scope Empowerment Card</p>
-          <p className="mt-2 font-display text-[clamp(2rem,6vw,3.2rem)] leading-none font-extrabold">
+          <p className="mt-2 text-[clamp(2.2rem,7vw,3.4rem)] leading-none font-extrabold tracking-[-0.03em]">
             ₹2,499
           </p>
-          <p className="mt-2 text-[0.7rem] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
+          <p className="mt-2 eyebrow text-muted-foreground">
             One-time student fee · 5-Year / 60-Month validity
           </p>
           <p className="mt-4 rounded-lg bg-secondary px-4 py-3 text-sm">
@@ -69,9 +69,9 @@ export function PaymentSection() {
               ["Complete your application", "Enter the same transaction reference in the application form."],
             ].map(([t, d], i) => (
               <li key={t} className="flex gap-3">
-                <span className="font-display text-sm font-extrabold text-scope">{i + 1}</span>
+                <span className="text-[0.95rem] font-bold text-scope">{i + 1}</span>
                 <span>
-                  <span className="block text-[0.75rem] font-bold tracking-[0.12em] uppercase">{t}</span>
+                  <span className="block text-[0.95rem] font-bold">{t}</span>
                   <span className="block text-[0.82rem] text-muted-foreground">{d}</span>
                 </span>
               </li>
@@ -85,7 +85,7 @@ export function PaymentSection() {
             After completing your payment, copy the UTR / Transaction ID from your payment app or
             bank confirmation and enter it in the application form below.
           </p>
-          <p className="mt-5 text-center text-[0.68rem] font-bold tracking-[0.14em] text-scope uppercase">
+          <p className="mt-5 text-center eyebrow text-scope">
             Scan → Pay → Copy UTR → Apply
           </p>
 
@@ -96,7 +96,7 @@ export function PaymentSection() {
               ["Payment verification", "Manual verification after application submission."],
             ].map(([k, v]) => (
               <div key={k} className="grid grid-cols-[auto_1fr] gap-3 bg-card p-3">
-                <dt className="text-[0.65rem] font-bold tracking-[0.12em] text-muted-foreground uppercase">
+                <dt className="text-[0.78rem] font-semibold text-muted-foreground">
                   {k}
                 </dt>
                 <dd className="text-right font-medium">{v}</dd>
@@ -198,7 +198,7 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
   };
 
   const field =
-    "mt-1.5 min-h-11 w-full rounded-lg border bg-card px-4 py-2.5 text-sm outline-none focus:border-scope";
+    "mt-2 h-12 w-full rounded-lg border border-input bg-card px-4 text-[1rem] outline-none transition-colors focus:border-scope focus:ring-2 focus:ring-scope/25";
 
   return (
     <SectionShell id="apply" tall={false}>
@@ -206,7 +206,7 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
         {steps.map(([s, t, d]) => (
           <li key={s} className="rounded-xl border bg-card p-5">
             <span className="eyebrow text-scope">{s}</span>
-            <span className="mt-1 block font-display text-base font-extrabold uppercase">{t}</span>
+            <span className="mt-1 block text-lg font-bold">{t}</span>
             <span className="mt-1.5 block text-[0.78rem] leading-snug text-muted-foreground">{d}</span>
           </li>
         ))}
@@ -220,35 +220,35 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
 
       <form noValidate onSubmit={onSubmit} className="mt-8 grid gap-5 rounded-2xl border bg-secondary/40 p-6 md:grid-cols-2 md:p-8">
         <div>
-          <label htmlFor="fullName" className="eyebrow text-muted-foreground">Full name</label>
+          <label htmlFor="fullName" className="text-[0.95rem] font-semibold">Full name</label>
           <input id="fullName" className={field} value={form.fullName} maxLength={100}
             aria-invalid={!!errors.fullName} onChange={(e) => set("fullName", e.target.value)} />
           {errors.fullName && <p className="mt-1 text-xs text-destructive">{errors.fullName}</p>}
         </div>
         <div>
-          <label htmlFor="phone" className="eyebrow text-muted-foreground">Phone number</label>
+          <label htmlFor="phone" className="text-[0.95rem] font-semibold">Phone number</label>
           <input id="phone" inputMode="tel" className={field} value={form.phone} maxLength={15}
             aria-invalid={!!errors.phone} onChange={(e) => set("phone", e.target.value)} />
           {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
         </div>
         <div>
-          <label htmlFor="email" className="eyebrow text-muted-foreground">Email ID</label>
+          <label htmlFor="email" className="text-[0.95rem] font-semibold">Email ID</label>
           <input id="email" type="email" className={field} value={form.email} maxLength={255}
             aria-invalid={!!errors.email} onChange={(e) => set("email", e.target.value)} />
           {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
         </div>
         <div>
-          <label htmlFor="batchId" className="eyebrow text-muted-foreground">Batch ID</label>
+          <label htmlFor="batchId" className="text-[0.95rem] font-semibold">Batch ID</label>
           <input id="batchId" className={field} value={form.batchId} maxLength={40}
             aria-invalid={!!errors.batchId} onChange={(e) => set("batchId", e.target.value)} />
           {errors.batchId && <p className="mt-1 text-xs text-destructive">{errors.batchId}</p>}
         </div>
 
         <div className="md:col-span-2">
-          <a href="#payment" className="inline-flex min-h-11 items-center text-[0.7rem] font-bold tracking-[0.12em] text-scope uppercase">
+          <a href="#payment" className="inline-flex min-h-11 items-center text-[0.9rem] font-semibold text-scope">
             Haven&apos;t paid yet? View payment QR ↑
           </a>
-          <label htmlFor="utr" className="eyebrow mt-1 block text-muted-foreground">
+          <label htmlFor="utr" className="mt-1 block text-[0.95rem] font-semibold">
             Payment UTR / Transaction ID
           </label>
           <input id="utr" className={field} value={form.utr} maxLength={40} placeholder="e.g. 428731XXXXXX"
@@ -274,7 +274,7 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
         </div>
 
         <div>
-          <label htmlFor="accel" className="eyebrow text-muted-foreground">Accelerator preference</label>
+          <label htmlFor="accel" className="text-[0.95rem] font-semibold">Accelerator preference</label>
           <select id="accel" className={field} value={form.acceleratorPreference}
             aria-invalid={!!errors.acceleratorPreference}
             onChange={(e) => set("acceleratorPreference", e.target.value)}>
@@ -288,7 +288,7 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
           )}
         </div>
         <div>
-          <label htmlFor="stype" className="eyebrow text-muted-foreground">Student type (optional)</label>
+          <label htmlFor="stype" className="text-[0.95rem] font-semibold">Student type (optional)</label>
           <select id="stype" className={field} value={form.studentType}
             onChange={(e) => set("studentType", e.target.value)}>
             {studentTypes.map((s) => (
@@ -316,7 +316,7 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
         </div>
 
         <div className="md:col-span-2">
-          <Cta type="submit">Apply for Scope Empowerment Card</Cta>
+          <Cta type="submit">Submit card application</Cta>
         </div>
       </form>
 
@@ -336,7 +336,7 @@ function SuccessModal({ app, onClose }: { app: ScopeApplication; onClose: () => 
     >
       <div className="max-h-[90vh] w-full max-w-lg overflow-auto rounded-2xl bg-card p-6 md:p-8">
         <p className="eyebrow text-scope">Application recorded</p>
-        <h2 id="success-title" className="mt-2 font-display text-2xl font-extrabold uppercase">
+        <h2 id="success-title" className="mt-2 text-2xl font-bold tracking-[-0.02em]">
           Thank you, {firstName}.
         </h2>
         <dl className="mt-6 grid gap-px overflow-hidden rounded-lg border bg-border text-sm">
@@ -353,7 +353,7 @@ function SuccessModal({ app, onClose }: { app: ScopeApplication; onClose: () => 
             ["Status", "Pending eligibility & payment verification"],
           ].map(([k, v]) => (
             <div key={k} className="grid grid-cols-[auto_1fr] gap-3 bg-card p-3">
-              <dt className="text-[0.65rem] font-bold tracking-[0.12em] text-muted-foreground uppercase">{k}</dt>
+              <dt className="text-[0.78rem] font-semibold text-muted-foreground">{k}</dt>
               <dd className="text-right font-medium break-words">{v}</dd>
             </div>
           ))}

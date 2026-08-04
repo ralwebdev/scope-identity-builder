@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
 const links = [
-  ["Benefits", "#benefits"],
   ["My Path", "#my-path"],
   ["Accelerator", "#accelerator"],
+  ["Benefits", "#benefits"],
   ["Portfolio", "#portfolio"],
+  ["Value", "#value"],
   ["Cashback", "#cashback"],
-  ["Partners", "#partners"],
-  ["Eligibility", "#eligibility"],
+  ["Pricing", "#price"],
 ];
 
 export function Nav() {
@@ -30,7 +30,7 @@ export function Nav() {
       <nav aria-label="Primary" className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 md:px-10">
         <a href="#top" className="flex items-center gap-2">
           <span className="inline-block h-3 w-3 rounded-[2px] bg-scope" />
-          <span className="font-display text-sm font-extrabold tracking-[0.16em]">SCOPE</span>
+          <span className="font-display text-base font-extrabold tracking-[0.06em]">SCOPE</span>
         </a>
 
         <ul className="hidden items-center gap-6 lg:flex">
@@ -38,7 +38,7 @@ export function Nav() {
             <li key={href}>
               <a
                 href={href}
-                className="text-[0.72rem] font-medium tracking-[0.1em] text-white/70 uppercase transition-colors hover:text-white"
+                className="text-[0.85rem] font-medium text-white/70 transition-colors hover:text-white"
               >
                 {label}
               </a>
@@ -49,7 +49,7 @@ export function Nav() {
         <div className="flex items-center gap-2">
           <a
             href="#payment"
-            className="hidden min-h-11 items-center rounded-full bg-scope px-4 text-[0.7rem] font-semibold tracking-[0.12em] text-white uppercase transition-colors hover:bg-scope-deep sm:inline-flex"
+            className="hidden min-h-11 items-center rounded-full bg-scope px-5 text-[0.85rem] font-semibold text-white transition-colors hover:bg-scope-deep sm:inline-flex"
           >
             Apply for Scope Card
           </a>
@@ -74,7 +74,7 @@ export function Nav() {
                 <a
                   href={href}
                   onClick={() => setOpen(false)}
-                  className="flex min-h-11 items-center border-b border-white/10 text-[0.8rem] tracking-[0.1em] text-white/80 uppercase"
+                  className="flex min-h-11 items-center border-b border-white/10 text-[0.95rem] text-white/80"
                 >
                   {label}
                 </a>
@@ -84,7 +84,7 @@ export function Nav() {
               <a
                 href="#payment"
                 onClick={() => setOpen(false)}
-                className="mt-3 flex min-h-11 items-center justify-center rounded-full bg-scope text-[0.75rem] font-semibold tracking-[0.12em] uppercase"
+                className="mt-3 flex min-h-11 items-center justify-center rounded-full bg-scope text-[0.95rem] font-semibold"
               >
                 Apply for Scope Card
               </a>
