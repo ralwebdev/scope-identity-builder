@@ -8,6 +8,8 @@ export function Cta({
   onClick,
   type,
   disabled,
+  target,
+  rel,
 }: {
   href?: string;
   children: ReactNode;
@@ -16,6 +18,8 @@ export function Cta({
   onClick?: () => void;
   type?: "button" | "submit";
   disabled?: boolean;
+  target?: string;
+  rel?: string;
 }) {
   const base =
     "group inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-semibold tracking-normal transition-all duration-200 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50";
@@ -41,7 +45,12 @@ export function Cta({
 
   if (href) {
     return (
-      <a href={href} className={`${base} ${styles} ${className}`}>
+      <a
+        href={href}
+        target={target}
+        rel={target === "_blank" && !rel ? "noopener noreferrer" : rel}
+        className={`${base} ${styles} ${className}`}
+      >
         {inner}
       </a>
     );

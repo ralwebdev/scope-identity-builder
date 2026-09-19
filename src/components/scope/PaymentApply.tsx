@@ -201,7 +201,7 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
     };
 
     try {
-      const appsScriptUrl = import.meta.env.VITE_APPSCRIPT_URL;
+      const appsScriptUrl = import.meta.env["VITE_APPSCRIPT_URL"];
 
       if (appsScriptUrl) {
         const studentLabel = studentTypes.find((s) => s.key === app.studentType)?.label || app.studentType || "Not specified";

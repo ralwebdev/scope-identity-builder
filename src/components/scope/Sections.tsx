@@ -1,4 +1,13 @@
 import { useState } from "react";
+import {
+  Mic,
+  Users,
+  FolderGit2,
+  ClipboardCheck,
+  GraduationCap,
+  TrendingUp,
+  Briefcase,
+} from "lucide-react";
 import { ScopeCard, QrPlaceholder } from "./ScopeCard";
 import { Cta, Fine, Headline, SectionShell, Sub } from "./Ui";
 import { Reveal } from "./Reveal";
@@ -212,7 +221,12 @@ export function Personalize({
             ))}
           </div>
           <div className="mt-7">
-            <Cta href="#accelerator" variant="ghost">
+            <Cta
+              href="https://cps.redapplelearning.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="ghost"
+            >
               Explore my path
             </Cta>
           </div>
@@ -313,12 +327,42 @@ export function Accelerator() {
 }
 
 /* ---------------- 06 UNLOCKS (card with orbiting labels) ---------------- */
-const unlocks: [string, string][] = [
-  ["Learn", "Accelerators, workshops and masterclasses"],
-  ["Build", "Projects, challenges, ideathons and hackathons"],
-  ["Showcase", "Portfolio, skills, certificates and achievements"],
-  ["Connect", "Cross-campus and ecosystem exposure"],
-  ["Grow", "Discover relevant opportunities"],
+const unlocks = [
+  {
+    title: "SEMINARS & WEBINARS",
+    desc: "Interactive expert masterclasses, technical sessions and global webinars.",
+    icon: Mic,
+  },
+  {
+    title: "INDUSTRY SESSIONS",
+    desc: "Direct interactions, fireside chats and mentorship with industry leaders.",
+    icon: Users,
+  },
+  {
+    title: "LIVE PROJECT & PORTFOLIO",
+    desc: "Hands-on real-world builds, challenges and a verified live digital portfolio.",
+    icon: FolderGit2,
+  },
+  {
+    title: "SELF ASSESSMENT",
+    desc: "Skill benchmarking, diagnostic evaluations and structured growth tracking.",
+    icon: ClipboardCheck,
+  },
+  {
+    title: "HIGHER STUDIES",
+    desc: "Guidance, profile evaluation and roadmaps for advanced higher education.",
+    icon: GraduationCap,
+  },
+  {
+    title: "CAREER PLANNING",
+    desc: "Step-by-step career roadmaps, goal milestones and professional advisory.",
+    icon: TrendingUp,
+  },
+  {
+    title: "JOB OPPORTUNITIES",
+    desc: "Curated internships, hiring drives and exclusive campus-to-career opportunities.",
+    icon: Briefcase,
+  },
 ];
 
 export function Unlocks() {
@@ -328,28 +372,41 @@ export function Unlocks() {
         <Headline className="max-w-3xl">
           One card.
           <br />
-          <span className="text-muted-foreground">Five ways to build your student journey.</span>
+          <span className="text-muted-foreground">What your membership unlocks.</span>
         </Headline>
       </Reveal>
-      <div className="mt-10 grid items-center gap-10 md:grid-cols-[0.95fr_1.05fr]">
+      <div className="mt-10 grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <Reveal>
           <div className="rounded-2xl bg-ink p-6 md:p-8" style={{ containerType: "inline-size" }}>
             <ScopeCard />
           </div>
         </Reveal>
-        <ol className="grid gap-3">
-          {unlocks.map(([t, d], i) => (
-            <li key={t} className="flex items-start gap-4 rounded-xl border bg-card p-4">
-              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-scope/10 text-[0.8rem] font-bold text-scope">
-                0{i + 1}
-              </span>
-              <span className="min-w-0">
-                <span className="block text-lg font-bold tracking-[-0.02em]">{t}</span>
-                <span className="block text-[0.95rem] text-muted-foreground">{d}</span>
-              </span>
-            </li>
-          ))}
-        </ol>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {unlocks.map((item, i) => {
+            const IconComponent = item.icon;
+            const isLastOdd = i === unlocks.length - 1;
+            return (
+              <div
+                key={item.title}
+                className={`group flex items-start gap-3.5 rounded-xl border border-border/80 bg-card p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-scope/40 hover:shadow-md ${
+                  isLastOdd ? "sm:col-span-2" : ""
+                }`}
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-scope/20 bg-scope/10 text-scope transition-all duration-200 group-hover:scale-105 group-hover:border-scope group-hover:bg-scope group-hover:text-white">
+                  <IconComponent className="h-5 w-5" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-[0.92rem] font-bold tracking-tight text-foreground uppercase">
+                    {item.title}
+                  </h3>
+                  <p className="mt-0.5 text-[0.82rem] leading-snug text-muted-foreground">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </SectionShell>
   );
