@@ -49,7 +49,7 @@ export function Nav() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <a
             href="#apply-form"
             className="hidden min-h-11 items-center rounded-full bg-scope px-5 text-[0.85rem] font-semibold text-white transition-colors hover:bg-scope-deep sm:inline-flex"
@@ -66,7 +66,7 @@ export function Nav() {
             <span className="sr-only">Menu</span>
             <span aria-hidden="true" className="text-lg">{open ? "×" : "≡"}</span>
           </button>
-        </div>
+        </div> */}
       </nav>
 
       {open && (

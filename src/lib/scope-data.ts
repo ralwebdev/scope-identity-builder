@@ -5,7 +5,7 @@ export const MEMBER = {
   validity: "LIFETIME",
 };
 
-export const FEE = "₹2,499";
+export const FEE = "₹2,999";
 
 export const studentTypes = [
   {
@@ -152,7 +152,7 @@ export const faqs: [string, string][] = [
     "Only eligible students enlisted with Scope Innovation Lab through participating institutions / active Scope Innovation Lab Chapters.",
   ],
   [
-    "What exactly do I receive for ₹2,499?",
+    "What exactly do I receive for ₹2,999/-?",
     "A 5-year / 60-month Scope Empowerment Card membership, any ONE eligible Scope Accelerator Programme during the first year, a growing Scope digital profile, participation access to eligible Scope activities subject to availability, and the Friends & Family cashback benefit.",
   ],
   [

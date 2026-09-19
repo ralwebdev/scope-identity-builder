@@ -30,13 +30,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Scope Empowerment Card by Scope Innovation Lab — a 5-year student membership with one eligible Accelerator in Year 1, a QR-linked portfolio and ecosystem participation. ₹2,499 one-time.",
+          "Scope Empowerment Card by Scope Innovation Lab — a 5-year student membership with one eligible Accelerator in Year 1, a QR-linked portfolio and ecosystem participation. ₹2,999/- one-time.",
       },
       { property: "og:title", content: "Scope Empowerment Card — Scope Innovation Lab" },
       {
         property: "og:description",
         content:
-          "One Card. Five years to Learn, Build, Showcase, Connect & Grow. ₹2,499 one-time, 5 years / 60 months.",
+          "One Card. Five years to Learn, Build, Showcase, Connect & Grow. ₹2,999/- one-time, 5 years / 60 months.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -91,7 +91,7 @@ function Landing() {
       <main>
         <Hero />
         <FastStrip />
-        <Problem />
+        {/* <Problem /> */}
         <Personalize selected={studentType} onSelect={setStudentType} />
         <Accelerator />
         <Unlocks />
