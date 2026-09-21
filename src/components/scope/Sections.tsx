@@ -188,11 +188,10 @@ export function Personalize({
               id={`tab-${s.key}`}
               type="button"
               onClick={() => onSelect(s.key)}
-              className={`min-h-12 rounded-full border px-5 text-[0.95rem] font-semibold transition-all ${
-                on
-                  ? "border-scope bg-scope text-white"
-                  : "border-border bg-card text-muted-foreground hover:border-foreground/40"
-              }`}
+              className={`min-h-12 rounded-full border px-5 text-[0.95rem] font-semibold transition-all ${on
+                ? "border-scope bg-scope text-white"
+                : "border-border bg-card text-muted-foreground hover:border-foreground/40"
+                }`}
             >
               {s.label}
             </button>
@@ -264,9 +263,8 @@ export function Accelerator() {
               type="button"
               aria-pressed={on}
               onClick={() => setPath(p)}
-              className={`min-h-12 rounded-full border px-5 text-[0.95rem] font-semibold transition-all ${
-                on ? "border-scope bg-scope text-white" : "border-white/20 text-white/70"
-              }`}
+              className={`min-h-12 rounded-full border px-5 text-[0.95rem] font-semibold transition-all ${on ? "border-scope bg-scope text-white" : "border-white/20 text-white/70"
+                }`}
             >
               {p === "creative" ? "Creative" : "Technical"}
             </button>
@@ -388,9 +386,8 @@ export function Unlocks() {
             return (
               <div
                 key={item.title}
-                className={`group flex items-start gap-3.5 rounded-xl border border-border/80 bg-card p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-scope/40 hover:shadow-md ${
-                  isLastOdd ? "sm:col-span-2" : ""
-                }`}
+                className={`group flex items-start gap-3.5 rounded-xl border border-border/80 bg-card p-3.5 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-scope/40 hover:shadow-md ${isLastOdd ? "sm:col-span-2" : ""
+                  }`}
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-scope/20 bg-scope/10 text-scope transition-all duration-200 group-hover:scale-105 group-hover:border-scope group-hover:bg-scope group-hover:text-white">
                   <IconComponent className="h-5 w-5" />
@@ -629,9 +626,8 @@ export function JourneyComparison() {
         {journeyRows.map(([area, a, b], i) => (
           <div
             key={area}
-            className={`grid grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] border-t ${
-              i % 2 ? "bg-secondary/40" : "bg-card"
-            }`}
+            className={`grid grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] border-t ${i % 2 ? "bg-secondary/40" : "bg-card"
+              }`}
           >
             <div className="p-3 text-[0.85rem] font-semibold">{area}</div>
             <div className="border-l p-3 text-[0.85rem] leading-snug text-muted-foreground">{a}</div>
@@ -774,11 +770,10 @@ export function Eligibility() {
         ].map((s, i, arr) => (
           <li key={s} className="flex items-center gap-3">
             <span
-              className={`rounded-lg border px-4 py-2.5 text-[0.9rem] font-semibold ${
-                i === arr.length - 1
-                  ? "border-scope bg-scope text-white"
-                  : "border-white/15 text-white/75"
-              }`}
+              className={`rounded-lg border px-4 py-2.5 text-[0.9rem] font-semibold ${i === arr.length - 1
+                ? "border-scope bg-scope text-white"
+                : "border-white/15 text-white/75"
+                }`}
             >
               {s}
             </span>
