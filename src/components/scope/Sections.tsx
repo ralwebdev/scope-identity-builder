@@ -567,7 +567,7 @@ export function ValueComparison() {
   return (
     <SectionShell id="value" className="bg-secondary">
       <Reveal>
-        <Headline className="max-w-3xl">Look at What ₹2,999/- Actually Unlocks.</Headline>
+        <Headline className="max-w-3xl">Look at What ₹4,999/- Actually Unlocks.</Headline>
       </Reveal>
 
       <div className="mt-9 grid gap-5 md:grid-cols-2">
@@ -586,7 +586,7 @@ export function ValueComparison() {
         <div className="rounded-2xl bg-ink p-6 text-white md:p-8">
           <p className="eyebrow text-scope">With Scope Empowerment Card</p>
           <p className="mt-4 text-[clamp(2.8rem,9vw,4.6rem)] leading-none font-extrabold tracking-[-0.03em]">
-            ₹2,999/-
+            ₹4,999/-
           </p>
           <p className="eyebrow mt-3 text-white/60">One-time · 5 years / 60 months</p>
           <ul className="mt-6 grid gap-2.5">
@@ -642,13 +642,13 @@ export function JourneyComparison() {
   );
 }
 
-/* ---------------- 11 WHY ₹2,999 FEELS DIFFERENT ---------------- */
+/* ---------------- 11 WHY ₹4,999 FEELS DIFFERENT ---------------- */
 export function WhyDifferent() {
   return (
     <SectionShell dark className="!py-16 md:!py-24">
       <div className="grid gap-8 md:grid-cols-3">
         {[
-          ["One short course", "can cost more than ₹2,999."],
+          ["One short course", "can cost more than ₹4,999."],
           ["One event", "can end in one day."],
           ["One certificate", "can sit in a folder."],
         ].map(([a, b]) => (
@@ -806,15 +806,15 @@ export function PriceReveal() {
           <Headline>Your Scope Empowerment Card</Headline>
           <p className="eyebrow mt-3 text-muted-foreground">5-year / 60-month membership</p>
           <p className="mt-6 text-[clamp(3rem,10vw,5.2rem)] leading-none font-extrabold tracking-[-0.04em]">
-            ₹2,999/-
+            ₹4,999/-
           </p>
           <p className="eyebrow mt-3 text-muted-foreground">One-time student fee</p>
-          <p className="mt-5 text-2xl font-bold text-scope">≈ ₹600 / year</p>
+          <p className="mt-5 text-2xl font-bold text-scope">≈ ₹1,000 / year</p>
           <p className="text-[0.9rem] text-muted-foreground">
             Equivalent across the five-year membership period.
           </p>
           <p className="mx-auto mt-5 max-w-[520px] text-[0.85rem] text-muted-foreground md:mx-0">
-            ₹2,999/- is paid once for the current five-year membership term. This is not an instalment
+            ₹4,999/- is paid once for the current five-year membership term. This is not an instalment
             plan.
           </p>
           <p className="mt-5 text-lg font-bold">One first-year Accelerator included.</p>
@@ -897,7 +897,7 @@ export function FinalCta() {
           </p>
           <p className="mt-6 text-xl font-bold">Start building it now.</p>
           <p className="mt-4 text-[0.95rem] text-white/60">
-            Scope Empowerment Card · ₹2,999 one-time · 5 years / 60 months · One eligible Accelerator
+            Scope Empowerment Card · ₹4,999 one-time · 5 years / 60 months · One eligible Accelerator
             included during Year 1
           </p>
           <div className="mt-8">

@@ -26,7 +26,7 @@ function PaymentQr() {
       ) : (
         <img
           src="/payment-qr.png"
-          alt="Authorised Scope payment QR code for the ₹2,999/- Scope Empowerment Card fee"
+          alt="Authorised Scope payment QR code for the ₹4,999/- Scope Empowerment Card fee"
           width={480}
           height={480}
           loading="lazy"
@@ -35,7 +35,7 @@ function PaymentQr() {
         />
       )}
       <p className="mt-3 eyebrow text-ink">
-        Scan to pay ₹2,999 /-
+        Scan to pay ₹4,999 /-
       </p>
     </div>
   );
@@ -44,7 +44,7 @@ function PaymentQr() {
 export function PaymentSection() {
   return (
     <SectionShell id="payment" className="bg-secondary" tall={false}>
-      <Headline>Pay ₹2,999, then complete your application.</Headline>
+      <Headline>Pay ₹4,999, then complete your application.</Headline>
       <p className="mt-4 max-w-[660px] text-[1.05rem] text-muted-foreground">
         Scan the authorised QR, copy your UTR / Transaction ID, then fill the form below.
       </p>
@@ -53,7 +53,7 @@ export function PaymentSection() {
         <div>
           <p className="eyebrow text-scope">Scope Empowerment Card</p>
           <p className="mt-2 text-[clamp(2.2rem,7vw,3.4rem)] leading-none font-extrabold tracking-[-0.03em]">
-            ₹2,999/-
+            ₹4,999/-
           </p>
           <p className="mt-2 eyebrow text-muted-foreground">
             One-time student fee · 5-Year / 60-Month validity
@@ -64,7 +64,7 @@ export function PaymentSection() {
 
           <ol className="mt-6 space-y-3">
             {[
-              ["Scan & pay", "Scan the authorised QR and pay ₹2,999."],
+              ["Scan & pay", "Scan the authorised QR and pay ₹4,999."],
               ["Copy your UTR", "Find the UTR / Transaction ID in the successful payment confirmation."],
               ["Complete your application", "Enter the same transaction reference in the application form."],
             ].map(([t, d], i) => (
@@ -91,7 +91,7 @@ export function PaymentSection() {
 
           <dl className="mt-6 grid gap-px overflow-hidden rounded-lg border bg-border text-[0.78rem]">
             {[
-              ["Payment amount", "₹2,999"],
+              ["Payment amount", "₹4,999"],
               ["Payment purpose", "Scope Empowerment Card — 5-Year Membership"],
               ["Payment verification", "Manual verification after application submission."],
             ].map(([k, v]) => (
@@ -117,7 +117,7 @@ export function PaymentSection() {
 
 const steps: [string, string, string][] = [
   ["Step 1", "Verify", "Confirm Scope eligibility / Batch ID."],
-  ["Step 2", "Pay", "Pay ₹2,999/- through the authorised payment instruction provided by Scope / participating institution."],
+  ["Step 2", "Pay", "Pay ₹4,999/- through the authorised payment instruction provided by Scope / participating institution."],
   ["Step 3", "Apply", "Enter student details and payment UTR."],
   ["Step 4", "Verify & Activate", "Scope verifies eligibility and payment before activation."],
 ];
@@ -311,7 +311,7 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
             aria-describedby="utr-help" aria-invalid={!!errors.utr}
             onChange={(e) => set("utr", e.target.value)} />
           <p id="utr-help" className="mt-1.5 text-[0.75rem] text-muted-foreground">
-            Complete the ₹2,999/- payment using the authorised QR above, then enter the exact UTR /
+            Complete the ₹4,999/- payment using the authorised QR above, then enter the exact UTR /
             Transaction ID shown in your successful payment confirmation.
           </p>
           {errors.utr && <p className="mt-1 text-xs text-destructive">{errors.utr}</p>}
@@ -322,7 +322,7 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
             <input type="checkbox" className="mt-1 h-5 w-5 accent-[var(--scope)]"
               checked={form.confirmPaid} onChange={(e) => set("confirmPaid", e.target.checked)} />
             <span>
-              I confirm that I have completed the ₹2,999 Scope Empowerment Card payment and entered
+              I confirm that I have completed the ₹4,999 Scope Empowerment Card payment and entered
               the corresponding UTR / Transaction ID above.
             </span>
           </label>
@@ -410,7 +410,7 @@ function SuccessModal({ app, onClose }: { app: ScopeApplication; onClose: () => 
             ["Batch ID", app.batchId],
             ["Membership", "Scope Empowerment Card"],
             ["Term", "5 Years / 60 Months"],
-            ["Payment amount", "₹2,999/-"],
+            ["Payment amount", "₹4,999/-"],
             ["UTR / Transaction ID", app.utr],
             ["Accelerator preference", app.acceleratorPreference],
             ["Submission date", new Date(app.submittedAt).toLocaleString()],
