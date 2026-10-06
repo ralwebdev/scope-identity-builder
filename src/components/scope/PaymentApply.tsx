@@ -1,5 +1,5 @@
 import { useState, useRef, type FormEvent, type ChangeEvent, type DragEvent } from "react";
-import { UploadCloud, User, X, CheckCircle2, Camera, Sparkles } from "lucide-react";
+import { UploadCloud, User, X, CheckCircle2, Camera, Sparkles, Loader2 } from "lucide-react";
 import { Cta, Headline, SectionShell } from "./Ui";
 import { QrPlaceholder } from "./ScopeCard";
 import {
@@ -616,6 +616,39 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
           </Cta>
         </div>
       </form>
+
+      {/* Fullscreen Submission Loader */}
+      {isSubmitting && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/75 backdrop-blur-md p-6 text-foreground"
+        >
+          <div className="relative flex flex-col items-center max-w-sm w-full rounded-2xl bg-card border border-border/70 p-8 text-center shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            {/* Animated Glowing Ring & Spinner */}
+            <div className="relative flex items-center justify-center mb-5">
+              <div className="absolute h-20 w-20 rounded-full bg-scope/20 animate-ping" />
+              <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-scope/10 border border-scope/30 text-scope shadow-inner">
+                <Loader2 className="h-8 w-8 animate-spin" />
+              </div>
+            </div>
+
+            <p className="eyebrow text-scope font-bold tracking-wider">Scope Innovation Lab</p>
+            <h3 className="mt-2 text-xl font-extrabold tracking-tight">
+              Submitting Application...
+            </h3>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              Uploading your card profile photo, recording payment UTR, and preparing your Scope Empowerment Card.
+            </p>
+
+            {/* Progress indicator */}
+            <div className="mt-5 flex items-center gap-2 rounded-full bg-secondary px-3.5 py-1.5 text-[0.75rem] font-medium text-muted-foreground border">
+              <span className="h-2 w-2 rounded-full bg-scope animate-pulse" />
+              <span>Please do not refresh or close this window</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {result && <SuccessModal app={result} onClose={() => setResult(null)} />}
     </SectionShell>
