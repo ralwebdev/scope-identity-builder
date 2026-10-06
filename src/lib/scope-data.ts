@@ -197,6 +197,10 @@ export type ScopeApplication = {
   applicationStatus: string;
   status: string;
   submittedAt: string;
+  profilePhoto?: string;
+  profilePhotoName?: string;
+  image?: string;
+  imageName?: string;
 };
 
 export const STORAGE_KEY = "scope_empowerment_applications";

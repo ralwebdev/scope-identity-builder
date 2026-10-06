@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from "react";
+import { useState, useRef, type FormEvent, type ChangeEvent, type DragEvent } from "react";
+import { UploadCloud, User, X, CheckCircle2, Camera, Sparkles } from "lucide-react";
 import { Cta, Headline, SectionShell } from "./Ui";
 import { QrPlaceholder } from "./ScopeCard";
 import {
@@ -52,7 +53,7 @@ export function PaymentSection() {
       <div className="mt-8 grid gap-8 rounded-2xl border bg-card p-6 md:grid-cols-2 md:p-8">
         <div>
           <p className="eyebrow text-scope">Scope Empowerment Card</p>
-          <p className="mt-2 text-[clamp(2.2rem,7vw,3.4rem)] leading-none font-extrabold tracking-[-0.03em]">
+          <p className="mt-2 text-[clamp(2.2rem,7vw,3.4rem)] leading-none font-extrabold tracking-[-0.02em]">
             ₹4,999/-
           </p>
           <p className="mt-2 eyebrow text-muted-foreground">
@@ -129,10 +130,63 @@ type FieldKey =
   | "batchId"
   | "utr"
   | "acceleratorPreference"
+  | "profilePhoto"
   | "confirmPaid"
   | "confirmInfo"
   | "confirmTerms";
 type Errors = Partial<Record<FieldKey, string>>;
+
+function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+// Compress / resize image for card printing and storage
+function processImageFile(file: File): Promise<{ dataUrl: string; name: string; size: string }> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Failed to read image file"));
+    reader.onload = (e) => {
+      const src = e.target?.result as string;
+      const img = new Image();
+      img.onerror = () => resolve({ dataUrl: src, name: file.name, size: formatFileSize(file.size) });
+      img.onload = () => {
+        const maxWidth = 1000;
+        const maxHeight = 1000;
+        let { width, height } = img;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressed = canvas.toDataURL("image/jpeg", 0.85);
+          resolve({
+            dataUrl: compressed,
+            name: file.name,
+            size: formatFileSize(Math.round((compressed.length * 3) / 4)),
+          });
+        } else {
+          resolve({ dataUrl: src, name: file.name, size: formatFileSize(file.size) });
+        }
+      };
+      img.src = src;
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 export function ApplicationSection({ defaultStudentType }: { defaultStudentType: string }) {
   const [form, setForm] = useState({
@@ -143,6 +197,9 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
     utr: "",
     studentType: defaultStudentType,
     acceleratorPreference: "",
+    profilePhoto: "",
+    profilePhotoName: "",
+    profilePhotoSize: "",
     confirmInfo: false,
     confirmTerms: false,
     confirmPaid: false,
@@ -151,10 +208,68 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
   const [result, setResult] = useState<ScopeApplication | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const set = (k: string, v: string | boolean) => {
     setForm((f) => ({ ...f, [k]: v }));
     setErrors((e) => ({ ...e, [k as FieldKey]: undefined }));
+  };
+
+  const handlePhotoUpload = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      setErrors((e) => ({ ...e, profilePhoto: "Please upload an image file (PNG, JPG, JPEG, WEBP)." }));
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setErrors((e) => ({ ...e, profilePhoto: "Image size must be less than 10MB." }));
+      return;
+    }
+
+    try {
+      const processed = await processImageFile(file);
+      setForm((f) => ({
+        ...f,
+        profilePhoto: processed.dataUrl,
+        profilePhotoName: processed.name,
+        profilePhotoSize: processed.size,
+      }));
+      setErrors((e) => ({ ...e, profilePhoto: undefined }));
+    } catch {
+      setErrors((e) => ({ ...e, profilePhoto: "Could not process photo. Please try another file." }));
+    }
+  };
+
+  const onFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handlePhotoUpload(file);
+    }
+  };
+
+  const onDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      handlePhotoUpload(file);
+    }
+  };
+
+  const onDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const onDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const removePhoto = () => {
+    setForm((f) => ({ ...f, profilePhoto: "", profilePhotoName: "", profilePhotoSize: "" }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const validate = () => {
@@ -198,6 +313,10 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
       applicationStatus: "Pending Verification",
       status: "Pending Verification",
       submittedAt: new Date().toISOString(),
+      profilePhoto: form.profilePhoto || undefined,
+      profilePhotoName: form.profilePhotoName || undefined,
+      image: form.profilePhoto || undefined,
+      imageName: form.profilePhotoName || undefined,
     };
 
     try {
@@ -218,6 +337,10 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
           status: app.status,
           membershipType: "5-Year",
           validityMonths: 60,
+          profilePhotoName: app.profilePhotoName || "",
+          profilePhoto: app.profilePhoto || "",
+          imageName: app.profilePhotoName || "",
+          image: app.profilePhoto || "",
         };
 
         const response = await fetch(appsScriptUrl, {
@@ -300,6 +423,116 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
           {errors.batchId && <p className="mt-1 text-xs text-destructive">{errors.batchId}</p>}
         </div>
 
+        {/* Profile Picture Upload Option (for Scope Card printing) */}
+        <div className="md:col-span-2 rounded-xl border bg-card p-5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <Camera className="h-4 w-4 text-scope" />
+              <label htmlFor="profile-photo-input" className="text-[0.95rem] font-semibold">
+                Profile photo (Printed on Scope Card)
+              </label>
+            </div>
+            <span className="rounded-full bg-scope/10 px-2.5 py-0.5 text-[0.72rem] font-semibold text-scope">
+              Card ID Photo
+            </span>
+          </div>
+          <p className="mt-1 text-[0.78rem] text-muted-foreground">
+            Upload a clear, front-facing passport-style portrait photo. This will be printed directly on your physical Scope Empowerment Card.
+          </p>
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            id="profile-photo-input"
+            accept="image/png,image/jpeg,image/webp,image/jpg"
+            className="hidden"
+            onChange={onFileInputChange}
+          />
+
+          {!form.profilePhoto ? (
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              onDrop={onDrop}
+              onDragOver={onDragOver}
+              onDragLeave={onDragLeave}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  fileInputRef.current?.click();
+                }
+              }}
+              className={`mt-3 flex flex-col items-center justify-center gap-2.5 rounded-xl border-2 border-dashed p-6 text-center cursor-pointer transition-all ${
+                isDragging
+                  ? "border-scope bg-scope/10 scale-[0.99]"
+                  : "border-input bg-secondary/30 hover:border-scope/60 hover:bg-secondary/60"
+              }`}
+            >
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-scope/10 text-scope">
+                <User className="h-7 w-7" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-foreground">
+                  <span className="text-scope font-bold underline underline-offset-2">Click to upload photo</span> or drag & drop
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Passport size portrait • JPG, PNG, WEBP (Max 10MB)
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-xl border bg-secondary/30 p-4">
+              <div className="flex items-center gap-4 min-w-0">
+                <div className="relative h-20 w-16 shrink-0 overflow-hidden rounded-lg border-2 border-scope shadow-sm bg-muted">
+                  <img
+                    src={form.profilePhoto}
+                    alt="Card profile preview"
+                    className="h-full w-full object-cover object-top"
+                  />
+                  <div className="absolute bottom-0 inset-x-0 bg-ink/75 py-0.5 text-center text-[0.55rem] font-bold tracking-wider text-white uppercase">
+                    CARD PHOTO
+                  </div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                    <p className="text-sm font-semibold truncate text-foreground">
+                      {form.profilePhotoName || "Student Photo"}
+                    </p>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {form.profilePhotoSize || "Image uploaded"} • Ready for physical card printing
+                  </p>
+                  <p className="text-[0.72rem] text-scope font-medium mt-1 flex items-center gap-1">
+                    <Sparkles className="h-3 w-3" /> Photo linked to card identity
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="rounded-lg border bg-card px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary transition-colors"
+                >
+                  Change Photo
+                </button>
+                <button
+                  type="button"
+                  onClick={removePhoto}
+                  className="flex h-7 w-7 items-center justify-center rounded-lg border border-destructive/30 text-destructive hover:bg-destructive/10 transition-colors"
+                  title="Remove photo"
+                  aria-label="Remove uploaded photo"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {errors.profilePhoto && <p className="mt-2 text-xs text-destructive">{errors.profilePhoto}</p>}
+        </div>
+
         <div className="md:col-span-2">
           <a href="#payment" className="inline-flex min-h-11 items-center text-[0.9rem] font-semibold text-scope">
             Haven&apos;t paid yet? View payment QR ↑
@@ -318,7 +551,7 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
         </div>
 
         <div className="md:col-span-2">
-          <label className="flex items-start gap-3 py-2 text-sm">
+          <label className="flex items-start gap-3 py-2 text-sm cursor-pointer">
             <input type="checkbox" className="mt-1 h-5 w-5 accent-[var(--scope)]"
               checked={form.confirmPaid} onChange={(e) => set("confirmPaid", e.target.checked)} />
             <span>
@@ -354,13 +587,13 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
         </div>
 
         <div className="md:col-span-2">
-          <label className="flex items-start gap-3 py-2 text-sm">
+          <label className="flex items-start gap-3 py-2 text-sm cursor-pointer">
             <input type="checkbox" className="mt-1 h-5 w-5 accent-[var(--scope)]"
               checked={form.confirmInfo} onChange={(e) => set("confirmInfo", e.target.checked)} />
             <span>I confirm that the information and payment reference provided are correct.</span>
           </label>
           {errors.confirmInfo && <p className="text-xs text-destructive">{errors.confirmInfo}</p>}
-          <label className="flex items-start gap-3 py-2 text-sm">
+          <label className="flex items-start gap-3 py-2 text-sm cursor-pointer">
             <input type="checkbox" className="mt-1 h-5 w-5 accent-[var(--scope)]"
               checked={form.confirmTerms} onChange={(e) => set("confirmTerms", e.target.checked)} />
             <span>
@@ -391,6 +624,8 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
 
 function SuccessModal({ app, onClose }: { app: ScopeApplication; onClose: () => void }) {
   const firstName = app.fullName.split(" ")[0];
+  const photo = app.profilePhoto || app.image;
+
   return (
     <div
       role="dialog"
@@ -399,10 +634,24 @@ function SuccessModal({ app, onClose }: { app: ScopeApplication; onClose: () => 
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4"
     >
       <div className="max-h-[90vh] w-full max-w-lg overflow-auto rounded-2xl bg-card p-6 md:p-8">
-        <p className="eyebrow text-scope">Application recorded</p>
-        <h2 id="success-title" className="mt-2 text-2xl font-bold tracking-[-0.02em]">
-          Thank you, {firstName}.
-        </h2>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="eyebrow text-scope">Application recorded</p>
+            <h2 id="success-title" className="mt-2 text-2xl font-bold tracking-[-0.02em]">
+              Thank you, {firstName}.
+            </h2>
+          </div>
+          {photo && (
+            <div className="relative h-16 w-14 shrink-0 overflow-hidden rounded-lg border-2 border-scope shadow-md">
+              <img
+                src={photo}
+                alt={app.fullName}
+                className="h-full w-full object-cover object-top"
+              />
+            </div>
+          )}
+        </div>
+
         <dl className="mt-6 grid gap-px overflow-hidden rounded-lg border bg-border text-sm">
           {[
             ["Application ID", app.applicationId],
@@ -410,6 +659,7 @@ function SuccessModal({ app, onClose }: { app: ScopeApplication; onClose: () => 
             ["Batch ID", app.batchId],
             ["Membership", "Scope Empowerment Card"],
             ["Term", "5 Years / 60 Months"],
+            ["Card Photo", photo ? "Uploaded (Ready for Print)" : "Not provided"],
             ["Payment amount", "₹4,999/-"],
             ["UTR / Transaction ID", app.utr],
             ["Accelerator preference", app.acceleratorPreference],
@@ -422,8 +672,9 @@ function SuccessModal({ app, onClose }: { app: ScopeApplication; onClose: () => 
             </div>
           ))}
         </dl>
+
         <p className="mt-4 text-[0.78rem] text-muted-foreground">
-          Your Scope Empowerment Card will be activated only after your Batch ID, eligibility and
+          Your Scope Empowerment Card will be activated and sent for physical printing after your Batch ID, eligibility and
           payment reference are verified through the authorised Scope process.
         </p>
         <div className="no-print mt-6 flex flex-wrap gap-3">
@@ -434,3 +685,5 @@ function SuccessModal({ app, onClose }: { app: ScopeApplication; onClose: () => 
     </div>
   );
 }
+
+
