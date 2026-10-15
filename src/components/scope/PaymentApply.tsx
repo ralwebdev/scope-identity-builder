@@ -117,7 +117,7 @@ export function PaymentSection() {
 }
 
 const steps: [string, string, string][] = [
-  ["Step 1", "Verify", "Confirm Scope eligibility / Batch ID."],
+  ["Step 1", "Verify", "Confirm Scope eligibility."],
   ["Step 2", "Pay", "Pay ₹4,999/- through the authorised payment instruction provided by Scope / participating institution."],
   ["Step 3", "Apply", "Enter student details and payment UTR."],
   ["Step 4", "Verify & Activate", "Scope verifies eligibility and payment before activation."],
@@ -127,7 +127,6 @@ type FieldKey =
   | "fullName"
   | "phone"
   | "email"
-  | "batchId"
   | "utr"
   | "acceleratorPreference"
   | "profilePhoto"
@@ -193,7 +192,6 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
     fullName: "",
     phone: "",
     email: "",
-    batchId: "",
     utr: "",
     studentType: defaultStudentType,
     acceleratorPreference: "",
@@ -277,7 +275,6 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
     if (form.fullName.trim().length < 2) e.fullName = "Enter your full name.";
     if (!/^[0-9+\-\s]{8,15}$/.test(form.phone.trim())) e.phone = "Enter a valid phone number.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = "Enter a valid email ID.";
-    if (form.batchId.trim().length < 2) e.batchId = "Enter your Scope Batch ID.";
     const utr = form.utr.trim();
     if (utr.length < 6) e.utr = "Enter the UTR / Transaction ID (minimum 6 characters).";
     else if (!/^[A-Za-z0-9-]+$/.test(utr)) e.utr = "Only letters, numbers and hyphens are allowed.";
@@ -302,7 +299,6 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
       fullName: form.fullName.trim(),
       phone: form.phone.trim(),
       email: form.email.trim(),
-      batchId: form.batchId.trim(),
       utr,
       transactionId: utr,
       studentType: form.studentType,
@@ -330,7 +326,7 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
           name: app.fullName,
           phone: app.phone,
           email: app.email,
-          batchId: app.batchId,
+          batchId: app.batchId || "",
           utr: app.utr,
           interest: studentLabel,
           accelerator: app.acceleratorPreference || "Not specified",
@@ -410,17 +406,11 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
             aria-invalid={!!errors.phone} onChange={(e) => set("phone", e.target.value)} />
           {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
         </div>
-        <div>
+        <div className="md:col-span-2">
           <label htmlFor="email" className="text-[0.95rem] font-semibold">Email ID</label>
           <input id="email" type="email" className={field} value={form.email} maxLength={255}
             aria-invalid={!!errors.email} onChange={(e) => set("email", e.target.value)} />
           {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
-        </div>
-        <div>
-          <label htmlFor="batchId" className="text-[0.95rem] font-semibold">Batch ID</label>
-          <input id="batchId" className={field} value={form.batchId} maxLength={40}
-            aria-invalid={!!errors.batchId} onChange={(e) => set("batchId", e.target.value)} />
-          {errors.batchId && <p className="mt-1 text-xs text-destructive">{errors.batchId}</p>}
         </div>
 
         {/* Profile Picture Upload Option (for Scope Card printing) */}
@@ -463,11 +453,10 @@ export function ApplicationSection({ defaultStudentType }: { defaultStudentType:
                   fileInputRef.current?.click();
                 }
               }}
-              className={`mt-3 flex flex-col items-center justify-center gap-2.5 rounded-xl border-2 border-dashed p-6 text-center cursor-pointer transition-all ${
-                isDragging
+              className={`mt-3 flex flex-col items-center justify-center gap-2.5 rounded-xl border-2 border-dashed p-6 text-center cursor-pointer transition-all ${isDragging
                   ? "border-scope bg-scope/10 scale-[0.99]"
                   : "border-input bg-secondary/30 hover:border-scope/60 hover:bg-secondary/60"
-              }`}
+                }`}
             >
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-scope/10 text-scope">
                 <User className="h-7 w-7" />
@@ -689,7 +678,7 @@ function SuccessModal({ app, onClose }: { app: ScopeApplication; onClose: () => 
           {[
             ["Application ID", app.applicationId],
             ["Student name", app.fullName],
-            ["Batch ID", app.batchId],
+            ...(app.batchId ? [["Batch ID", app.batchId]] : []),
             ["Membership", "Scope Empowerment Card"],
             ["Term", "5 Years / 60 Months"],
             ["Card Photo", photo ? "Uploaded (Ready for Print)" : "Not provided"],
@@ -707,7 +696,7 @@ function SuccessModal({ app, onClose }: { app: ScopeApplication; onClose: () => 
         </dl>
 
         <p className="mt-4 text-[0.78rem] text-muted-foreground">
-          Your Scope Empowerment Card will be activated and sent for physical printing after your Batch ID, eligibility and
+          Your Scope Empowerment Card will be activated and sent for physical printing after your eligibility and
           payment reference are verified through the authorised Scope process.
         </p>
         <div className="no-print mt-6 flex flex-wrap gap-3">

@@ -93,18 +93,27 @@ export const technicalOptions = [
   "Game Testing & Ideation",
 ];
 
+// export const acceleratorPreferences = [
+//   "Creative Accelerator Programme",
+//   // "DSA Concepts & Masterclass",
+//   "Database & SQL Learning",
+//   "AI & ML Masterclass for Beginners",
+//   "HTML, CSS, JavaScript",
+//   "C & C#",
+//   "OOP Concepts Masterclass",
+//   "Game Development Masterclass",
+//   "Game Testing & Ideation",
+//   "Decide Later",
+// ];
+
 export const acceleratorPreferences = [
-  "Creative Accelerator Programme",
-  "DSA Concepts & Masterclass",
-  "Database & SQL Learning",
-  "AI & ML Masterclass for Beginners",
-  "HTML, CSS, JavaScript",
-  "C & C#",
-  "OOP Concepts Masterclass",
-  "Game Development Masterclass",
-  "Game Testing & Ideation",
-  "Decide Later",
-];
+  "Graphics & AI",
+  "UI/UX & AI",
+  "3D Modelling & AI",
+  "Game Development & AI",
+  "Cinematography, Editing & AI"
+]
+
 
 export const journeyRows: [string, string, string][] = [
   ["Learning", "Syllabus mainly", "Syllabus + selected learning beyond it"],
@@ -186,7 +195,7 @@ export type ScopeApplication = {
   fullName: string;
   phone: string;
   email: string;
-  batchId: string;
+  batchId?: string;
   utr: string;
   transactionId: string;
   studentType: string;
